@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital-Marketing - Produits Numériques Madagascar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 12px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #228B22, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .search-container {
+            flex: 1;
+            max-width: 600px;
+            margin: 0 40px;
+            position: relative;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 50px 12px 20px;
+            border: 2px solid #228B22;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .search-bar:focus {
+            border-color: #DC143C;
+            box-shadow: 0 0 10px rgba(220, 20, 60, 0.2);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #ff6b35;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            background: #DC143C;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-header {
+            padding: 8px 16px;
+            border: 1px solid #228B22;
+            background: white;
+            color: #228B22;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-header:hover {
+            background: #228B22;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(34, 139, 34, 0.3);
+        }
+
+        .flag-mg {
+            width: 32px;
+            height: 24px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            background-image: url('https://flagcdn.com/32x24/mg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .flag-mg:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-icon {
+            position: relative;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .cart-icon:hover {
+            color: #228B22;
+            transform: scale(1.1);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+
+        .mobile-menu:hover {
+            background-color: #f0f0f0;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .mobile-menu.active span:nth-child(1) {
+            transform: rotate(45deg) translate(9px, 9px);
+        }
+
+        .mobile-menu.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Navigation */
+        .nav {
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+            padding: 0 20px;
+            transition: all 0.3s;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 40px;
+            padding: 15px 0;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: #228B22;
+            border-bottom-color: #228B22;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 50%;
+            background: #DC143C;
+            transition: all 0.3s;
+            transform: translateX(-50%);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100vh;
+            background: linear-gradient(135deg, #228B22 0%, #DC143C 100%);
+            z-index: 2000;
+            transition: left 0.3s ease;
+            padding-top: 80px;
+        }
+
+        .mobile-nav.active {
+            left: 0;
+        }
+
+        .mobile-nav-container {
+            padding: 40px 20px;
+        }
+
+        .mobile-nav-link {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            transition: all 0.3s;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .mobile-nav-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateX(10px);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-close:hover {
+            background: rgba(255,255,255,0.2);
+            transform: rotate(90deg);
+        }
+
+        /* Main Content */
+        .main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .hero-title {
+            font-size: 36px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .hero-subtitle {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* Search Results */
+        .search-results {
+            background: #e8f5e8;
+            border: 1px solid #228B22;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .search-results.active {
+            display: block;
+        }
+
+        .search-results-text {
+            color: #228B22;
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .search-results-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .no-results {
+            background: #ffe6e6;
+            border: 1px solid #DC143C;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            display: none;
+        }
+
+        .no-results.active {
+            display: block;
+        }
+
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .no-results-title {
+            color: #DC143C;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .no-results-text {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .clear-search-btn {
+            background: #DC143C;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .clear-search-btn:hover {
+            background: #b8122e;
+            transform: translateY(-2px);
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 40px;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 10px 18px;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: #228B22;
+            color: white;
+            border-color: #228B22;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(34, 139, 34, 0.3);
+        }
+
+        .filter-btn.top-seller {
+            background: #DC143C;
+            color: white;
+            border-color: #DC143C;
+        }
+
+        .filter-btn.top-seller:hover {
+            background: #b8122e;
+        }
+
+        /* Products Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 60px;
+            transition: all 0.3s;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .product-card.hidden {
+            display: none;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .product-image.canva { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
+        .product-image.ebook { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
+        .product-image.formation { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        .product-image.calendar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .product-image.coaching { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); }
+
+        .product-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #DC143C;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .product-category {
+            font-size: 12px;
+            color: #228B22;
+            background: rgba(34, 139, 34, 0.1);
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .stars {
+            color: #ffc107;
+            font-size: 14px;
+        }
+
+        .rating-count {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .product-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: #228B22;
+            margin-bottom: 8px;
+        }
+
+        .old-price {
+            color: #999;
+            text-decoration: line-through;
+            font-size: 16px;
+            margin-left: 8px;
+        }
+
+        .discount {
+            background: #DC143C;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .download-btn {
+            flex: 1;
+            background: #228B22;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .download-btn:hover {
+            background: #1e7a1e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(34, 139, 34, 0.3);
+        }
+
+        .download-btn.premium {
+            background: #DC143C;
+        }
+
+        .download-btn.premium:hover {
+            background: #b8122e;
+        }
+
+        .preview-btn {
+            background: white;
+            color: #228B22;
+            border: 1px solid #228B22;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .preview-btn:hover {
+            background: #228B22;
+            color: white;
+        }
+
+        .product-status {
+            font-size: 12px;
+            margin-top: 8px;
+            padding: 4px 8px;
+            border-radius: 10px;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .product-status.free {
+            background: #e8f5e8;
+            color: #228B22;
+        }
+
+        .product-status.premium {
+            background: #ffe6e6;
+            color: #DC143C;
+        }
+
+        .product-status.login-required {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: linear-gradient(135deg, #228B22 0%, #DC143C 100%);
+            color: white;
+            padding: 60px 20px;
+            margin: 40px 0;
+            border-radius: 16px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .newsletter-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .newsletter-container {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .newsletter-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .newsletter-subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 12px;
+            max-width: 400px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .newsletter-input:focus {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .newsletter-btn {
+            padding: 14px 30px;
+            background: white;
+            color: #228B22;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .newsletter-btn:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Footer */
+        .footer {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 60px 20px 20px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-section h3 {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #228B22;
+        }
+
+        .footer-section p {
+            color: #bdc3c7;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #228B22;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: #34495e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: #228B22;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #34495e;
+            padding-top: 20px;
+            text-align: center;
+            color: #bdc3c7;
+        }
+
+        .footer-bottom .heart {
+            color: #DC143C;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            14% { transform: scale(1.2); }
+            28% { transform: scale(1); }
+            42% { transform: scale(1.2); }
+            70% { transform: scale(1); }
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #228B22;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .search-container {
+                order: 3;
+                width: 100%;
+                margin: 0;
+            }
+
+            .header-actions {
+                gap: 10px;
+            }
+
+            .btn-header {
+                padding: 6px 12px;
+                font-size: 14px;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 28px;
+            }
+
+            .hero-subtitle {
+                font-size: 16px;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+                gap: 20px;
+            }
+
+            .filters {
+                justify-content: center;
+            }
+
+            .filter-btn {
+                font-size: 13px;
+                padding: 8px 14px;
+            }
+
+            .newsletter-title {
+                font-size: 24px;
+            }
+
+            .newsletter-subtitle {
+                font-size: 16px;
+            }
+
+            .newsletter-form {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .newsletter-input {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .newsletter-btn {
+                width: 100%;
+                max-width: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .products-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 15px;
+            }
+
+            .product-card {
+                font-size: 14px;
+            }
+
+            .product-info {
+                padding: 15px;
+            }
+
+            .product-title {
+                font-size: 14px;
+            }
+
+            .product-price {
+                font-size: 18px;
+            }
+
+            .newsletter-section {
+                padding: 40px 20px;
+            }
+
+            .newsletter-title {
+                font-size: 20px;
+            }
+
+            .newsletter-subtitle {
+                font-size: 14px;
+            }
+
+            .product-actions {
+                flex-direction: column;
+            }
+
+            .download-btn, .preview-btn {
+                width: 100%;
+            }
+        }
+		
+		     /* Mobile Navigation - Corrections */
+.mobile-nav {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(135deg, #228B22 0%, #DC143C 100%);
+    z-index: 2000;
+    transition: left 0.4s ease-in-out;
+    padding-top: 80px;
+    overflow-y: auto; /* Ajout pour le scroll si nécessaire */
+}
+
+.mobile-nav.active {
+    left: 0;
+}
+
+.mobile-nav-container {
+    padding: 40px 20px;
+    display: flex; /* Ajout */
+    flex-direction: column; /* Ajout */
+    gap: 10px; /* Ajout */
+}
+
+.mobile-nav-link {
+    display: block;
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 500;
+    padding: 15px 20px;
+    margin: 5px 0; /* Réduction de la marge */
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    text-align: left; /* Ajout */
+    width: 100%; /* Ajout */
+    box-sizing: border-box; /* Ajout */
+}
+
+.mobile-nav-link:hover {
+    background: rgba(255,255,255,0.2);
+    transform: translateX(10px);
+}
+
+/* Responsive - Correction */
+@media (max-width: 768px) {
+    .mobile-menu {
+        display: flex;
+    }
+
+    .nav {
+        display: none;
+    }
+    
+    /* Assurer que le menu mobile est visible */
+    .mobile-nav {
+        display: block; /* Changement important */
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav">
+        <div class="mobile-nav-close">×</div>
+        <div class="mobile-nav-container">
+            <a href="#" class="mobile-nav-link" data-section="home">🏠 Accueil</a>
+            <a href="#" class="mobile-nav-link" data-section="products">📦 Produits numériques</a>
+            <a href="#" class="mobile-nav-link" data-section="formations">🎓 Formations</a>
+            <a href="#" class="mobile-nav-link" data-section="services">⚡ Services</a>
+            <a href="#" class="mobile-nav-link" data-section="blog">📝 Blog</a>
+            <a href="#" class="mobile-nav-link" data-section="contact">📞 Contact</a>
+            <a href="#" class="mobile-nav-link" data-section="about">👨‍💼 À propos</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo" onclick="resetSearch()">SmartDigitalPro</div>
+            
+            <div class="search-container">
+                <input type="text" class="search-bar" placeholder="Rechercher des produits..." id="searchInput">
+                <button class="search-btn" onclick="performSearch()">🔍</button>
+            </div>
+
+            <div class="header-actions">
+                <a href="#" class="btn-header">Se connecter</a>
+                <a href="#" class="btn-header">Vendre avec nous</a>
+                <div class="flag-mg" title="Madagascar"></div>
+                <div class="cart-icon" title="Panier">🛒</div>
+                <div class="mobile-menu" onclick="toggleMobileMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#" class="nav-link active" data-section="home">Accueil</a>
+            <a href="#" class="nav-link" data-section="products">Produits numériques</a>
+            <a href="#" class="nav-link" data-section="formations">Formations</a>
+            <a href="#" class="nav-link" data-section="services">Services</a>
+            <a href="#" class="nav-link" data-section="blog">Blog</a>
+            <a href="#" class="nav-link" data-section="contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main">
+        <section class="hero-section">
+            <h1 class="hero-title" id="heroTitle">Les produits numériques les plus vendus</h1>
+            <p class="hero-subtitle" id="heroSubtitle">1000+ résultats pertinents</p>
+        </section>
+
+        <!-- Search Results Display -->
+        <div class="search-results" id="searchResults">
+            <div class="search-results-text" id="searchResultsText"></div>
+            <div class="search-results-count" id="searchResultsCount"></div>
+        </div>
+
+        <!-- No Results Display -->
+        <div class="no-results" id="noResults">
+            <div class="no-results-icon">🔍</div>
+            <div class="no-results-title">Aucun produit ne correspond à votre recherche</div>
+            <div class="no-results-text">Essayez d'autres mots-clés ou parcourez nos catégories populaires.</div>
+            <button class="clear-search-btn" onclick="resetSearch()">Effacer la recherche</button>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="loading-spinner" id="loadingSpinner">
+            <div class="spinner"></div>
+            <p>Recherche en cours...</p>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn top-seller" onclick="filterProducts('top-seller')">Top vente</button>
+            <button class="filter-btn active" onclick="filterProducts('all')">Téléchargement numérique</button>
+            <button class="filter-btn" onclick="filterProducts('madagascar')">Pays : Madagascar</button>
+            <button class="filter-btn" onclick="filterProducts('canva')">Modèles Canva</button>
+            <button class="filter-btn" onclick="filterProducts('ebook')">E-books</button>
+            <button class="filter-btn" onclick="filterProducts('formation')">Formations vidéo</button>
+            <button class="filter-btn" onclick="filterProducts('coaching')">Coaching</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="productsGrid">
+            <!-- Product 1 -->
+            <div class="product-card" data-category="canva" data-keywords="canva modèles templates réseaux sociaux instagram facebook">
+                <div class="product-image canva">
+                    <img src="https://github.com/balisama21/balisama-site/blob/main/canva.jpg" alt="100 Modèles Canva">
+                    <div class="product-badge">HOT</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Modèles Canva</div>
+                    <h3 class="product-title">100 modèles Canva pour les réseaux sociaux</h3>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(2.4K)</span>
+                    </div>
+                    <div class="product-price">
+                        25 000 MGA
+                        <span class="old-price">35 000 MGA</span>
+                        <span class="discount">-29%</span>
+                    </div>
+                    <div class="product-status free">Téléchargement gratuit</div>
+                    <div class="product-actions">
+                        <button class="download-btn" onclick="downloadProduct('canva-templates.zip', 'free')">
+                            📥 Télécharger
+                        </button>
+                        <button class="preview-btn" onclick="previewProduct('canva-preview')">Aperçu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 2 -->
+            <div class="product-card" data-category="ebook" data-keywords="ebook business entrepreneur madagascar lancer startup">
+                <div class="product-image ebook">
+                    <span>E-book Business</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">E-book</div>
+                    <h3 class="product-title">E-book : Lancer son business en ligne à Madagascar</h3>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(1.8K)</span>
+                    </div>
+                    <div class="product-price">15 000 MGA</div>
+                    <div class="product-status premium">Produit premium</div>
+                    <div class="product-actions">
+                        <button class="download-btn premium" onclick="downloadProduct('business-ebook.pdf', 'premium', 15000)">
+                            💳 Acheter & Télécharger
+                        </button>
+                        <button class="preview-btn" onclick="previewProduct('ebook-preview')">Aperçu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 3 -->
+            <div class="product-card" data-category="formation" data-keywords="formation marketing digital 2025 cours vidéo apprentissage">
+                <div class="product-image formation">
+                    <span>Formation Vidéo</span>
+                    <div class="product-badge">NOUVEAU</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Formation</div>
+                    <h3 class="product-title">Formation complète - Marketing digital 2025</h3>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(896)</span>
+                    </div>
+                    <div class="product-price">89 000 MGA</div>
+                    <div class="product-status login-required">Connexion requise</div>
+                    <div class="product-actions">
+                        <button class="download-btn premium" onclick="downloadProduct('formation-marketing.zip', 'login-required', 89000)">
+                            🎓 Accéder à la formation
+                        </button>
+                        <button class="preview-btn" onclick="previewProduct('formation-preview')">Aperçu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 4 -->
+            <div class="product-card" data-category="calendar" data-keywords="calendrier contenu planification idées 365 jours">
+                <div class="product-image calendar">
+                    <span>Calendrier PDF</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Planner</div>
+                    <h3 class="product-title">Calendrier de contenu PDF - 365 jours d'idées</h3>
+                    <div class="product-rating">
+                        <div class="stars">★★★★☆</div>
+                        <span class="rating-count">(654)</span>
+                    </div>
+                    <div class="product-price">12 000 MGA</div>
+                    <div class="product-status free">Téléchargement gratuit</div>
+                    <div class="product-actions">
+                        <button class="download-btn" onclick="downloadProduct('calendrier-contenu.pdf', 'free')">
+                            📥 Télécharger
+                        </button>
+                        <button class="preview-btn" onclick="previewProduct('calendar-preview')">Aperçu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 5 -->
+            <div class="product-card" data-category="coaching" data-keywords="coaching zoom accompagnement personnel stratégie digitale">
+                <div class="product-image coaching">
+                    <span>Coaching 1h</span>
+                    <div class="product-badge">PREMIUM</div>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Coaching</div>
+                    <h3 class="product-title">Accompagnement personnalisé Zoom 1h - Stratégie digitale</h3>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(127)</span>
+                    </div>
+                    <div class="product-price">45 000 MGA</div>
+                    <div class="product-status premium">Service premium</div>
+                    <div class="product-actions">
+                        <button class="download-btn premium" onclick="downloadProduct('coaching-session', 'booking', 45000)">
+                            📅 Réserver maintenant
+                        </button>
+                        <button class="preview-btn" onclick="previewProduct('coaching-info')">Plus d'infos</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 6 -->
+            <div class="product-card" data-category="canva" data-keywords="prompts chatgpt ia intelligence artificielle entrepreneurs">
+                <div class="product-image canva">
+                    <span>Templates IA</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">IA Tools</div>
+                    <h3 class="product-title">50 prompts ChatGPT pour entrepreneurs malgaches</h3>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(2.1K)</span>
+                    </div>
+                    <div class="product-price">8 000 MGA</div>
+                    <div class="product-status free">Téléchargement gratuit</div>
+                    <div class="product-actions">
+                        <button class="download-btn" onclick="downloadProduct('chatgpt-prompts.pdf', 'free')">
+                            📥 Télécharger
+                        </button>
+                        <button class="preview-btn" onclick="previewProduct('prompts-preview')">Aperçu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 7 -->
+            <div class="product-card" data-category="ebook" data-keywords="guide freelance travail indépendant madagascar">
+                <div class="product-image ebook">
+                    <span>Guide Freelance</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">E-book</div>
+                    <h3 class="product-title">Guide complet du freelance à Madagascar</h3>
+                    <div class="product-rating">
+                        <div class="stars">★★★★☆</div>
+                        <span class="rating-count">(423)</span>
+                    </div>
+                    <div class="product-price">18 000 MGA</div>
+                    <div class="product-status premium">Produit premium</div>
+                    <div class="product-actions">
+                        <button class="download-btn premium" onclick="downloadProduct('freelance-guide.pdf', 'premium', 18000)">
+                            💳 Acheter & Télécharger
+                        </button>
+                        <button class="preview-btn" onclick="previewProduct('freelance-preview')">Aperçu</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product 8 -->
+            <div class="product-card" data-category="formation" data-keywords="wordpress création site web développement">
+                <div class="product-image formation">
+                    <span>Formation WordPress</span>
+                </div>
+                <div class="product-info">
+                    <div class="product-category">Formation</div>
+                    <h3 class="product-title">Créer son site WordPress professionnel</h3>
+                    <div class="product-rating">
+                        <div class="stars">★★★★★</div>
+                        <span class="rating-count">(756)</span>
+                    </div>
+                    <div class="product-price">65 000 MGA</div>
+                    <div class="product-status login-required">Connexion requise</div>
+                    <div class="product-actions">
+                        <button class="download-btn premium" onclick="downloadProduct('wordpress-formation.zip', 'login-required', 65000)">
+                            🎓 Accéder à la formation
+                        </button>
+                        <button class="preview-btn" onclick="previewProduct('wordpress-preview')">Aperçu</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Newsletter Section -->
+        <section class="newsletter-section">
+            <div class="newsletter-container">
+                <h2 class="newsletter-title">Restez informé de nos nouveautés</h2>
+                <p class="newsletter-subtitle">Recevez gratuitement nos astuces, offres et formations directement par e-mail.</p>
+                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                    <input type="email" class="newsletter-input" placeholder="Votre adresse e-mail" required id="newsletterEmail">
+                    <button type="submit" class="newsletter-btn">S'abonner</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>SmartDigitalPro</h3>
+                    <p>Votre plateforme de référence pour les produits numériques à Madagascar. Nous proposons des solutions digitales de qualité pour entrepreneurs, créateurs et professionnels.</p>
+                    <div class="social-icons">
+                        <div class="social-icon" onclick="openSocial('email')">📧</div>
+                        <div class="social-icon" onclick="openSocial('website')">🌐</div>
+                        <div class="social-icon" onclick="openSocial('linkedin')">💼</div>
+                        <div class="social-icon" onclick="openSocial('telegram')">📱</div>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Produits</h3>
+                    <ul>
+                        <li><a href="#" onclick="filterProducts('canva')">Modèles Canva</a></li>
+                        <li><a href="#" onclick="filterProducts('ebook')">E-books</a></li>
+                        <li><a href="#" onclick="filterProducts('formation')">Formations</a></li>
+                        <li><a href="#" onclick="filterProducts('coaching')">Coaching</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="#" onclick="navigateToSection('services')">Marketing Digital</a></li>
+                        <li><a href="#" onclick="navigateToSection('services')">Développement Web</a></li>
+                        <li><a href="#" onclick="navigateToSection('services')">Intelligence Artificielle</a></li>
+                        <li><a href="#" onclick="navigateToSection('services')">Formation & Conseil</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><a href="mailto:contact@smartdigitalpro.mg">📧 contact@smartdigitalpro.mg</a></li>
+                        <li>📍 Antananarivo, Madagascar</li>
+                        <li>🕒 Support 24/7</li>
+                        <li><a href="#" onclick="navigateToSection('contact')">📞 Nous contacter</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2025 SmartDigitalPro Madagascar Par Maminirina Balsama. Tous droits réservés. | Fait avec <span class="heart">❤️</span> à Madagascar</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Variables globales
+        let allProducts = [];
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeProducts();
+            setupEventListeners();
+        });
+
+        // Configuration des produits
+        function initializeProducts() {
+            const productCards = document.querySelectorAll('.product-card');
+            allProducts = Array.from(productCards).map(card => ({
+                element: card,
+                category: card.getAttribute('data-category'),
+                keywords: card.getAttribute('data-keywords'),
+                title: card.querySelector('.product-title').textContent,
+                visible: true
+            }));
+        }
+
+        // Configuration des événements
+        function setupEventListeners() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', debounce(performSearch, 300));
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch();
+                }
+            });
+
+            // Navigation links
+            document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    if (section) {
+                        navigateToSection(section);
+                    }
+                });
+            });
+        }
+
+        // Fonction de recherche
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const query = searchInput.value.toLowerCase().trim();
+            
+            showLoadingSpinner();
+            
+            setTimeout(() => {
+                searchQuery = query;
+                filterAndDisplayProducts();
+                hideLoadingSpinner();
+            }, 500);
+        }
+
+        // Filtrage et affichage des produits
+        function filterAndDisplayProducts() {
+            const searchResults = document.getElementById('searchResults');
+            const noResults = document.getElementById('noResults');
+            const heroTitle = document.getElementById('heroTitle');
+            const heroSubtitle = document.getElementById('heroSubtitle');
+            
+            let visibleCount = 0;
+            let matchingProducts = [];
+
+            allProducts.forEach(product => {
+                let shouldShow = true;
+
+                // Filtrage par recherche
+                if (searchQuery) {
+                    const searchText = `${product.title} ${product.keywords} ${product.category}`.toLowerCase();
+                    shouldShow = searchText.includes(searchQuery);
+                }
+
+                // Filtrage par catégorie
+                if (currentFilter !== 'all' && currentFilter !== 'top-seller') {
+                    shouldShow = shouldShow && product.category === currentFilter;
+                }
+
+                if (shouldShow) {
+                    product.element.classList.remove('hidden');
+                    product.visible = true;
+                    visibleCount++;
+                    matchingProducts.push(product);
+                } else {
+                    product.element.classList.add('hidden');
+                    product.visible = false;
+                }
+            });
+
+            // Mise à jour de l'interface
+            if (searchQuery) {
+                if (visibleCount > 0) {
+                    searchResults.classList.add('active');
+                    noResults.classList.remove('active');
+                    document.getElementById('searchResultsText').textContent = `Résultats pour "${searchQuery}"`;
+                    document.getElementById('searchResultsCount').textContent = `${visibleCount} produit${visibleCount > 1 ? 's' : ''} trouvé${visibleCount > 1 ? 's' : ''}`;
+                    heroTitle.textContent = `Résultats de recherche pour "${searchQuery}"`;
+                    heroSubtitle.textContent = `${visibleCount} produit${visibleCount > 1 ? 's' : ''} correspondant${visibleCount > 1 ? 's' : ''}`;
+                } else {
+                    searchResults.classList.remove('active');
+                    noResults.classList.add('active');
+                    heroTitle.textContent = 'Aucun résultat trouvé';
+                    heroSubtitle.textContent = 'Essayez d\'autres mots-clés';
+                }
+            } else {
+                searchResults.classList.remove('active');
+                noResults.classList.remove('active');
+                heroTitle.textContent = getFilterTitle();
+                heroSubtitle.textContent = `${visibleCount} produit${visibleCount > 1 ? 's' : ''} disponible${visibleCount > 1 ? 's' : ''}`;
+            }
+        }
+
+        // Filtrage par catégorie
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            // Mise à jour des boutons de filtre
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            filterAndDisplayProducts();
+        }
+
+        // Réinitialiser la recherche
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            searchQuery = '';
+            currentFilter = 'all';
+            
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector('.filter-btn[onclick="filterProducts(\'all\')"]').classList.add('active');
+            
+            filterAndDisplayProducts();
+        }
+
+        // Téléchargement de produits
+        function downloadProduct(filename, type, price = 0) {
+            if (type === 'free') {
+                // Téléchargement gratuit
+                showNotification(`Téléchargement de ${filename} en cours...`, 'success');
+                simulateDownload(filename);
+            } else if (type === 'premium') {
+                // Produit payant
+                if (confirm(`Ce produit coûte ${price.toLocaleString()} MGA. Voulez-vous continuer vers le paiement ?`)) {
+                    showNotification('Redirection vers la page de paiement...', 'info');
+                    setTimeout(() => {
+                        window.open(`#paiement/${filename}/${price}`, '_blank');
+                    }, 1000);
+                }
+            } else if (type === 'login-required') {
+                // Connexion requise
+                if (confirm('Une connexion est requise pour accéder à ce contenu. Voulez-vous vous connecter ?')) {
+                    showNotification('Redirection vers la page de connexion...', 'info');
+                    setTimeout(() => {
+                        window.open('#connexion', '_blank');
+                    }, 1000);
+                }
+            } else if (type === 'booking') {
+                // Réservation de coaching
+                showNotification('Redirection vers le calendrier de réservation...', 'info');
+                setTimeout(() => {
+                    window.open('https://calendly.com/smartdigitalpro', '_blank');
+                }, 1000);
+            }
+        }
+
+        // Simulation de téléchargement
+        function simulateDownload(filename) {
+            const link = document.createElement('a');
+            link.href = `data:text/plain;charset=utf-8,${encodeURIComponent('Contenu du fichier: ' + filename)}`;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            setTimeout(() => {
+                showNotification(`${filename} téléchargé avec succès !`, 'success');
+            }, 2000);
+        }
+
+        // Aperçu des produits
+        function previewProduct(productId) {
+            showNotification('Ouverture de l\'aperçu...', 'info');
+            setTimeout(() => {
+                alert(`Aperçu du produit ${productId}\n\nCeci est une démo. Dans la version finale, cela ouvrirait une modal avec l'aperçu du produit.`);
+            }, 500);
+        }
+
+        // Menu mobile
+        function toggleMobileMenu() {
+            const mobileMenu = document.querySelector('.mobile-nav');
+            const mobileMenuBtn = document.querySelector('.mobile-menu');
+            
+            mobileMenu.classList.toggle('active');
+            mobileMenuBtn.classList.toggle('active');
+        }
+
+        // Fermeture du menu mobile
+        document.querySelector('.mobile-nav-close').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.querySelector('.mobile-menu').classList.remove('active');
+        });
+
+        // Navigation entre sections
+        function navigateToSection(section) {
+            // Fermer le menu mobile
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.querySelector('.mobile-menu').classList.remove('active');
+            
+            // Mise à jour de la navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === section) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Simulation de navigation
+            switch(section) {
+                case 'home':
+                    resetSearch();
+                    showNotification('Bienvenue sur SmartDigitalPro !', 'success');
+                    break;
+                case 'products':
+                    showNotification('Affichage de tous les produits numériques', 'info');
+                    break;
+                case 'formations':
+                    filterProducts('formation');
+                    showNotification('Affichage des formations disponibles', 'info');
+                    break;
+                case 'services':
+                    showNotification('Section Services - En cours de développement', 'info');
+                    break;
+                case 'blog':
+                    showNotification('Blog - Prochainement disponible', 'info');
+                    break;
+                case 'contact':
+                    showNotification('Page de contact - En cours de développement', 'info');
+                    break;
+                default:
+                    showNotification('Section en développement', 'info');
+            }
+        }
+
+        // Newsletter
+        function subscribeNewsletter(event) {
+            event.preventDefault();
+            const email = document.getElementById('newsletterEmail').value;
+            
+            if (email) {
+                showNotification(`Merci ${email} ! Vous êtes maintenant abonné à notre newsletter.`, 'success');
+                document.getElementById('newsletterEmail').value = '';
+            }
+        }
+
+        // Réseaux sociaux
+        function openSocial(platform) {
+            const urls = {
+                email: 'mailto:contact@smartdigitalpro.mg',
+                website: 'https://smartdigitalpro.mg',
+                linkedin: 'https://linkedin.com/company/smartdigitalpro',
+                telegram: 'https://t.me/smartdigitalpro'
+            };
+            
+            if (urls[platform]) {
+                window.open(urls[platform], '_blank');
+            }
+        }
+
+        // Utilitaires
+        function showLoadingSpinner() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+        }
+
+        function hideLoadingSpinner() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? '#228B22' : type === 'error' ? '#DC143C' : '#007bff'};
+                color: white;
+                padding: 15px 20px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                z-index: 10000;
+                font-weight: 500;
+                max-width: 300px;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        function getFilterTitle() {
+            const titles = {
+                'all': 'Tous les produits numériques',
+                'canva': 'Modèles Canva',
+                'ebook': 'E-books et guides',
+                'formation': 'Formations vidéo',
+                'coaching': 'Services de coaching',
+                'calendar': 'Planners et calendriers',
+                'top-seller': 'Produits les plus vendus',
+                'madagascar': 'Produits spécial Madagascar'
+            };
+            return titles[currentFilter] || 'Produits numériques';
+        }
+
+        // CSS pour les animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

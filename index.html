@@ -243,8 +243,9 @@
             height: 100vh;
             background: linear-gradient(135deg, #228B22 0%, #DC143C 100%);
             z-index: 2000;
-            transition: left 0.3s ease;
+            transition: left 0.4s ease-in-out;
             padding-top: 80px;
+            overflow-y: auto;
         }
 
         .mobile-nav.active {
@@ -253,6 +254,9 @@
 
         .mobile-nav-container {
             padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .mobile-nav-link {
@@ -262,11 +266,14 @@
             font-size: 18px;
             font-weight: 500;
             padding: 15px 20px;
-            margin: 10px 0;
+            margin: 5px 0;
             border-radius: 10px;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             background: rgba(255,255,255,0.1);
             backdrop-filter: blur(10px);
+            text-align: left;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .mobile-nav-link:hover {
@@ -462,7 +469,6 @@
         .product-image {
             width: 100%;
             height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -470,17 +476,22 @@
             font-size: 18px;
             font-weight: bold;
             position: relative;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+            overflow: hidden;
         }
 
-        .product-image.canva {
-          background-image: url('https://raw.githubusercontent.com/balisama21/plateforme/blob/main/canva.jpg');
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
         }
+
+        .product-card:hover .product-image img {
+            transform: scale(1.05);
+        }
+
+        /* Fallback backgrounds si l'image ne charge pas */
+        .product-image.canva { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .product-image.ebook { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
         .product-image.formation { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
         .product-image.calendar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
@@ -497,6 +508,7 @@
             font-size: 12px;
             font-weight: bold;
             animation: pulse 2s infinite;
+            z-index: 10;
         }
 
         @keyframes pulse {
@@ -642,6 +654,28 @@
         .product-status.login-required {
             background: #fff3cd;
             color: #856404;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #228B22;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         /* Newsletter Section */
@@ -825,28 +859,6 @@
             70% { transform: scale(1); }
         }
 
-        /* Loading Animation */
-        .loading-spinner {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #228B22;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
         /* Responsive */
         @media (max-width: 768px) {
             .header-container {
@@ -879,6 +891,10 @@
 
             .nav {
                 display: none;
+            }
+
+            .mobile-nav {
+                display: block;
             }
 
             .hero-title {
@@ -969,102 +985,24 @@
                 width: 100%;
             }
         }
-		
-		     /* Mobile Navigation - Corrections */
-.mobile-nav {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100vh;
-    background: linear-gradient(135deg, #228B22 0%, #DC143C 100%);
-    z-index: 2000;
-    transition: left 0.4s ease-in-out;
-    padding-top: 80px;
-    overflow-y: auto; /* Ajout pour le scroll si nécessaire */
-}
-
-.mobile-nav.active {
-    left: 0;
-}
-
-.mobile-nav-container {
-    padding: 40px 20px;
-    display: flex; /* Ajout */
-    flex-direction: column; /* Ajout */
-    gap: 10px; /* Ajout */
-}
-
-.mobile-nav-link {
-    display: block;
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 500;
-    padding: 15px 20px;
-    margin: 5px 0; /* Réduction de la marge */
-    border-radius: 10px;
-    transition: all 0.3s ease;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(10px);
-    text-align: left; /* Ajout */
-    width: 100%; /* Ajout */
-    box-sizing: border-box; /* Ajout */
-}
-
-.mobile-nav-link:hover {
-    background: rgba(255,255,255,0.2);
-    transform: translateX(10px);
-}
-
-/* Responsive - Correction */
-@media (max-width: 768px) {
-    .mobile-menu {
-        display: flex;
-    }
-
-    .nav {
-        display: none;
-    }
-    
-    /* Assurer que le menu mobile est visible */
-    .mobile-nav {
-        display: block; /* Changement important */
-    }
-}
     </style>
 </head>
 <body>
-    <!-- Mobile Navigation Overlay -->
-    <div class="mobile-nav">
-        <div class="mobile-nav-close">×</div>
-        <div class="mobile-nav-container">
-            <a href="#" class="mobile-nav-link" data-section="home">🏠 Accueil</a>
-            <a href="#" class="mobile-nav-link" data-section="products">📦 Produits numériques</a>
-            <a href="#" class="mobile-nav-link" data-section="formations">🎓 Formations</a>
-            <a href="#" class="mobile-nav-link" data-section="services">⚡ Services</a>
-            <a href="#" class="mobile-nav-link" data-section="blog">📝 Blog</a>
-            <a href="#" class="mobile-nav-link" data-section="contact">📞 Contact</a>
-            <a href="#" class="mobile-nav-link" data-section="about">👨‍💼 À propos</a>
-        </div>
-    </div>
-
     <!-- Header -->
     <header class="header">
         <div class="header-container">
-            <div class="logo" onclick="resetSearch()">SmartDigitalPro</div>
+            <div class="logo">SmartDigitalPro</div>
             
             <div class="search-container">
-                <input type="text" class="search-bar" placeholder="Rechercher des produits..." id="searchInput">
+                <input type="text" class="search-bar" id="searchInput" placeholder="Rechercher des produits numériques...">
                 <button class="search-btn" onclick="performSearch()">🔍</button>
             </div>
-
+            
             <div class="header-actions">
                 <a href="#" class="btn-header">Se connecter</a>
-                <a href="#" class="btn-header">Vendre avec nous</a>
-                <div class="flag-mg" title="Madagascar"></div>
-                <div class="cart-icon" title="Panier">🛒</div>
+                <a href="#" class="btn-header">S'inscrire</a>
+                <div class="flag-mg"></div>
+                <div class="cart-icon">🛒</div>
                 <div class="mobile-menu" onclick="toggleMobileMenu()">
                     <span></span>
                     <span></span>
@@ -1078,7 +1016,7 @@
     <nav class="nav">
         <div class="nav-container">
             <a href="#" class="nav-link active" data-section="home">Accueil</a>
-            <a href="#" class="nav-link" data-section="products">Produits numériques</a>
+            <a href="#" class="nav-link" data-section="products">Produits</a>
             <a href="#" class="nav-link" data-section="formations">Formations</a>
             <a href="#" class="nav-link" data-section="services">Services</a>
             <a href="#" class="nav-link" data-section="blog">Blog</a>
@@ -1086,10 +1024,24 @@
         </div>
     </nav>
 
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <div class="mobile-nav-close">×</div>
+        <div class="mobile-nav-container">
+            <a href="#" class="mobile-nav-link" data-section="home">🏠 Accueil</a>
+            <a href="#" class="mobile-nav-link" data-section="products">📦 Produits</a>
+            <a href="#" class="mobile-nav-link" data-section="formations">🎓 Formations</a>
+            <a href="#" class="mobile-nav-link" data-section="services">⚙️ Services</a>
+            <a href="#" class="mobile-nav-link" data-section="blog">📝 Blog</a>
+            <a href="#" class="mobile-nav-link" data-section="contact">📧 Contact</a>
+        </div>
+    </div>
+
     <!-- Main Content -->
     <main class="main">
+        <!-- Hero Section -->
         <section class="hero-section">
-            <h1 class="hero-title" id="heroTitle">Les produits numériques les plus vendus</h1>
+            <h1class="hero-title" id="heroTitle">Les produits numériques les plus vendus</h1>
             <p class="hero-subtitle" id="heroSubtitle">1000+ résultats pertinents</p>
         </section>
 
@@ -1129,7 +1081,7 @@
             <!-- Product 1 -->
             <div class="product-card" data-category="canva" data-keywords="canva modèles templates réseaux sociaux instagram facebook">
                 <div class="product-image canva">
-                    <img src="https://raw.githubusercontent.com/balisama21/plateforme/blob/main/canva.jpg" alt="100 Modèles Canva">
+                    <img src="https://github.com/balisama21/plateforme/blob/main/canva.jpg" alt="100 Modèles Canva">
                     <div class="product-badge">HOT</div>
                 </div>
                 <div class="product-info">
@@ -1157,7 +1109,7 @@
             <!-- Product 2 -->
             <div class="product-card" data-category="ebook" data-keywords="ebook business entrepreneur madagascar lancer startup">
                 <div class="product-image ebook">
-                    <span>E-book Business</span>
+                    <img src="https://github.com/balisama21/balisama-site/blob/main/ebook-business.jpg" alt="E-book Business">
                 </div>
                 <div class="product-info">
                     <div class="product-category">E-book</div>
@@ -1180,7 +1132,7 @@
             <!-- Product 3 -->
             <div class="product-card" data-category="formation" data-keywords="formation marketing digital 2025 cours vidéo apprentissage">
                 <div class="product-image formation">
-                    <span>Formation Vidéo</span>
+                    <img src="https://github.com/balisama21/balisama-site/blob/main/formation-marketing.jpg" alt="Formation Marketing Digital">
                     <div class="product-badge">NOUVEAU</div>
                 </div>
                 <div class="product-info">
@@ -1204,7 +1156,7 @@
             <!-- Product 4 -->
             <div class="product-card" data-category="calendar" data-keywords="calendrier contenu planification idées 365 jours">
                 <div class="product-image calendar">
-                    <span>Calendrier PDF</span>
+                    <img src="https://github.com/balisama21/balisama-site/blob/main/calendrier-contenu.jpg" alt="Calendrier de Contenu">
                 </div>
                 <div class="product-info">
                     <div class="product-category">Planner</div>
@@ -1227,7 +1179,7 @@
             <!-- Product 5 -->
             <div class="product-card" data-category="coaching" data-keywords="coaching zoom accompagnement personnel stratégie digitale">
                 <div class="product-image coaching">
-                    <span>Coaching 1h</span>
+                    <img src="https://github.com/balisama21/balisama-site/blob/main/coaching-zoom.jpg" alt="Coaching Zoom">
                     <div class="product-badge">PREMIUM</div>
                 </div>
                 <div class="product-info">
@@ -1251,7 +1203,7 @@
             <!-- Product 6 -->
             <div class="product-card" data-category="canva" data-keywords="prompts chatgpt ia intelligence artificielle entrepreneurs">
                 <div class="product-image canva">
-                    <span>Templates IA</span>
+                    <img src="https://github.com/balisama21/balisama-site/blob/main/chatgpt-prompts.jpg" alt="ChatGPT Prompts">
                 </div>
                 <div class="product-info">
                     <div class="product-category">IA Tools</div>
@@ -1274,7 +1226,7 @@
             <!-- Product 7 -->
             <div class="product-card" data-category="ebook" data-keywords="guide freelance travail indépendant madagascar">
                 <div class="product-image ebook">
-                    <span>Guide Freelance</span>
+                    <img src="https://github.com/balisama21/balisama-site/blob/main/freelance-guide.jpg" alt="Guide Freelance">
                 </div>
                 <div class="product-info">
                     <div class="product-category">E-book</div>
@@ -1297,7 +1249,7 @@
             <!-- Product 8 -->
             <div class="product-card" data-category="formation" data-keywords="wordpress création site web développement">
                 <div class="product-image formation">
-                    <span>Formation WordPress</span>
+                    <img src="https://github.com/balisama21/plateforme/blob/main/canva.jpg" alt="Formation WordPress">
                 </div>
                 <div class="product-info">
                     <div class="product-category">Formation</div>
@@ -1385,360 +1337,338 @@
 
     <script>
         // Variables globales
-        let allProducts = [];
         let currentFilter = 'all';
-        let searchQuery = '';
+        let searchTerm = '';
+        let allProducts = [];
 
         // Initialisation
         document.addEventListener('DOMContentLoaded', function() {
-            initializeProducts();
-            setupEventListeners();
-        });
-
-        // Configuration des produits
-        function initializeProducts() {
-            const productCards = document.querySelectorAll('.product-card');
-            allProducts = Array.from(productCards).map(card => ({
-                element: card,
-                category: card.getAttribute('data-category'),
-                keywords: card.getAttribute('data-keywords'),
-                title: card.querySelector('.product-title').textContent,
-                visible: true
-            }));
-        }
-
-        // Configuration des événements
-        function setupEventListeners() {
+            allProducts = Array.from(document.querySelectorAll('.product-card'));
+            updateProductCount();
+            
+            // Gestionnaire d'événements pour la barre de recherche
             const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', debounce(performSearch, 300));
+            searchInput.addEventListener('input', function() {
+                clearTimeout(this.searchTimeout);
+                this.searchTimeout = setTimeout(() => {
+                    performSearch();
+                }, 300);
+            });
+            
+            // Gestionnaire pour la touche Entrée
             searchInput.addEventListener('keypress', function(e) {
                 if (e.key === 'Enter') {
+                    e.preventDefault();
                     performSearch();
                 }
             });
-
-            // Navigation links
-            document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const section = this.getAttribute('data-section');
-                    if (section) {
-                        navigateToSection(section);
-                    }
-                });
-            });
-        }
+        });
 
         // Fonction de recherche
         function performSearch() {
             const searchInput = document.getElementById('searchInput');
             const query = searchInput.value.toLowerCase().trim();
             
-            showLoadingSpinner();
+            // Afficher le spinner
+            showLoading();
             
+            // Simuler un délai de recherche
             setTimeout(() => {
-                searchQuery = query;
+                hideLoading();
+                searchTerm = query;
+                
+                if (query === '') {
+                    resetSearch();
+                    return;
+                }
+                
                 filterAndDisplayProducts();
-                hideLoadingSpinner();
+                updateSearchResults(query);
             }, 500);
         }
 
-        // Filtrage et affichage des produits
+        // Fonction pour filtrer et afficher les produits
         function filterAndDisplayProducts() {
-            const searchResults = document.getElementById('searchResults');
-            const noResults = document.getElementById('noResults');
-            const heroTitle = document.getElementById('heroTitle');
-            const heroSubtitle = document.getElementById('heroSubtitle');
-            
             let visibleCount = 0;
-            let matchingProducts = [];
-
+            
             allProducts.forEach(product => {
-                let shouldShow = true;
-
-                // Filtrage par recherche
-                if (searchQuery) {
-                    const searchText = `${product.title} ${product.keywords} ${product.category}`.toLowerCase();
-                    shouldShow = searchText.includes(searchQuery);
-                }
-
-                // Filtrage par catégorie
-                if (currentFilter !== 'all' && currentFilter !== 'top-seller') {
-                    shouldShow = shouldShow && product.category === currentFilter;
-                }
-
-                if (shouldShow) {
-                    product.element.classList.remove('hidden');
-                    product.visible = true;
+                const category = product.dataset.category;
+                const keywords = product.dataset.keywords.toLowerCase();
+                const title = product.querySelector('.product-title').textContent.toLowerCase();
+                
+                // Vérifier si le produit correspond aux critères de recherche
+                const matchesSearch = searchTerm === '' || 
+                    keywords.includes(searchTerm) || 
+                    title.includes(searchTerm);
+                
+                // Vérifier si le produit correspond au filtre de catégorie
+                const matchesFilter = currentFilter === 'all' || 
+                    category === currentFilter ||
+                    (currentFilter === 'madagascar' && keywords.includes('madagascar')) ||
+                    (currentFilter === 'top-seller' && product.querySelector('.product-badge'));
+                
+                // Afficher ou masquer le produit
+                if (matchesSearch && matchesFilter) {
+                    product.classList.remove('hidden');
                     visibleCount++;
-                    matchingProducts.push(product);
                 } else {
-                    product.element.classList.add('hidden');
-                    product.visible = false;
+                    product.classList.add('hidden');
                 }
             });
+            
+            // Afficher ou masquer le message "aucun résultat"
+            const noResults = document.getElementById('noResults');
+            if (visibleCount === 0) {
+                noResults.classList.add('active');
+            } else {
+                noResults.classList.remove('active');
+            }
+            
+            updateProductCount(visibleCount);
+        }
 
-            // Mise à jour de l'interface
-            if (searchQuery) {
-                if (visibleCount > 0) {
-                    searchResults.classList.add('active');
-                    noResults.classList.remove('active');
-                    document.getElementById('searchResultsText').textContent = `Résultats pour "${searchQuery}"`;
-                    document.getElementById('searchResultsCount').textContent = `${visibleCount} produit${visibleCount > 1 ? 's' : ''} trouvé${visibleCount > 1 ? 's' : ''}`;
-                    heroTitle.textContent = `Résultats de recherche pour "${searchQuery}"`;
-                    heroSubtitle.textContent = `${visibleCount} produit${visibleCount > 1 ? 's' : ''} correspondant${visibleCount > 1 ? 's' : ''}`;
-                } else {
-                    searchResults.classList.remove('active');
-                    noResults.classList.add('active');
-                    heroTitle.textContent = 'Aucun résultat trouvé';
-                    heroSubtitle.textContent = 'Essayez d\'autres mots-clés';
-                }
+        // Fonction pour mettre à jour les résultats de recherche
+        function updateSearchResults(query) {
+            const searchResults = document.getElementById('searchResults');
+            const searchResultsText = document.getElementById('searchResultsText');
+            const searchResultsCount = document.getElementById('searchResultsCount');
+            
+            const visibleProducts = allProducts.filter(p => !p.classList.contains('hidden'));
+            
+            if (query && visibleProducts.length > 0) {
+                searchResultsText.textContent = `Résultats pour "${query}"`;
+                searchResultsCount.textContent = `${visibleProducts.length} produit(s) trouvé(s)`;
+                searchResults.classList.add('active');
             } else {
                 searchResults.classList.remove('active');
-                noResults.classList.remove('active');
-                heroTitle.textContent = getFilterTitle();
-                heroSubtitle.textContent = `${visibleCount} produit${visibleCount > 1 ? 's' : ''} disponible${visibleCount > 1 ? 's' : ''}`;
             }
         }
 
-        // Filtrage par catégorie
+        // Fonction pour filtrer les produits par catégorie
         function filterProducts(category) {
             currentFilter = category;
             
-            // Mise à jour des boutons de filtre
+            // Mettre à jour les boutons de filtre
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
+            
             event.target.classList.add('active');
-
+            
+            // Filtrer et afficher les produits
             filterAndDisplayProducts();
         }
 
-        // Réinitialiser la recherche
+        // Fonction pour réinitialiser la recherche
         function resetSearch() {
-            document.getElementById('searchInput').value = '';
-            searchQuery = '';
+            searchTerm = '';
             currentFilter = 'all';
             
+            // Réinitialiser l'input de recherche
+            document.getElementById('searchInput').value = '';
+            
+            // Réinitialiser les filtres
             document.querySelectorAll('.filter-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             document.querySelector('.filter-btn[onclick="filterProducts(\'all\')"]').classList.add('active');
             
-            filterAndDisplayProducts();
+            // Afficher tous les produits
+            allProducts.forEach(product => {
+                product.classList.remove('hidden');
+            });
+            
+            // Masquer les messages
+            document.getElementById('searchResults').classList.remove('active');
+            document.getElementById('noResults').classList.remove('active');
+            
+            // Mettre à jour le titre
+            document.getElementById('heroTitle').textContent = 'Les produits numériques les plus vendus';
+            updateProductCount();
         }
 
-        // Téléchargement de produits
+        // Fonction pour mettre à jour le compteur de produits
+        function updateProductCount(count = null) {
+            const subtitle = document.getElementById('heroSubtitle');
+            const visibleCount = count !== null ? count : allProducts.filter(p => !p.classList.contains('hidden')).length;
+            subtitle.textContent = `${visibleCount}+ résultats pertinents`;
+        }
+
+        // Fonctions d'affichage du loader
+        function showLoading() {
+            document.getElementById('loadingSpinner').style.display = 'block';
+            document.getElementById('productsGrid').style.opacity = '0.5';
+        }
+
+        function hideLoading() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('productsGrid').style.opacity = '1';
+        }
+
+        // Fonction de téléchargement des produits
         function downloadProduct(filename, type, price = 0) {
-            if (type === 'free') {
-                // Téléchargement gratuit
-                showNotification(`Téléchargement de ${filename} en cours...`, 'success');
-                simulateDownload(filename);
-            } else if (type === 'premium') {
-                // Produit payant
-                if (confirm(`Ce produit coûte ${price.toLocaleString()} MGA. Voulez-vous continuer vers le paiement ?`)) {
-                    showNotification('Redirection vers la page de paiement...', 'info');
-                    setTimeout(() => {
-                        window.open(`#paiement/${filename}/${price}`, '_blank');
-                    }, 1000);
+            if (type === 'premium' && price > 0) {
+                if (confirm(`Voulez-vous acheter ce produit pour ${price.toLocaleString()} MGA ?`)) {
+                    alert(`Redirection vers la page de paiement pour ${filename}...`);
+                    // Ici vous pourriez intégrer un système de paiement
                 }
             } else if (type === 'login-required') {
-                // Connexion requise
-                if (confirm('Une connexion est requise pour accéder à ce contenu. Voulez-vous vous connecter ?')) {
-                    showNotification('Redirection vers la page de connexion...', 'info');
-                    setTimeout(() => {
-                        window.open('#connexion', '_blank');
-                    }, 1000);
-                }
+                alert('Connexion requise. Redirection vers la page de connexion...');
+                // Redirection vers la page de connexion
             } else if (type === 'booking') {
-                // Réservation de coaching
-                showNotification('Redirection vers le calendrier de réservation...', 'info');
+                alert('Redirection vers la page de réservation...');
+                // Redirection vers système de réservation
+            } else {
+                alert(`Téléchargement de ${filename} en cours...`);
+                // Simuler le téléchargement
                 setTimeout(() => {
-                    window.open('https://calendly.com/smartdigitalpro', '_blank');
+                    alert('Téléchargement terminé !');
                 }, 1000);
             }
         }
 
-        // Simulation de téléchargement
-        function simulateDownload(filename) {
-            const link = document.createElement('a');
-            link.href = `data:text/plain;charset=utf-8,${encodeURIComponent('Contenu du fichier: ' + filename)}`;
-            link.download = filename;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            setTimeout(() => {
-                showNotification(`${filename} téléchargé avec succès !`, 'success');
-            }, 2000);
+        // Fonction d'aperçu des produits
+        function previewProduct(previewId) {
+            alert(`Aperçu du produit ${previewId} - Fonctionnalité à implémenter`);
+            // Ici vous pourriez ouvrir une modal avec l'aperçu
         }
 
-        // Aperçu des produits
-        function previewProduct(productId) {
-            showNotification('Ouverture de l\'aperçu...', 'info');
-            setTimeout(() => {
-                alert(`Aperçu du produit ${productId}\n\nCeci est une démo. Dans la version finale, cela ouvrirait une modal avec l'aperçu du produit.`);
-            }, 500);
-        }
-
-        // Menu mobile
+        // Fonction de gestion du menu mobile
         function toggleMobileMenu() {
-            const mobileMenu = document.querySelector('.mobile-nav');
-            const mobileMenuBtn = document.querySelector('.mobile-menu');
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const mobileNav = document.querySelector('.mobile-nav');
             
             mobileMenu.classList.toggle('active');
-            mobileMenuBtn.classList.toggle('active');
-        }
-
-        // Fermeture du menu mobile
-        document.querySelector('.mobile-nav-close').addEventListener('click', function() {
-            document.querySelector('.mobile-nav').classList.remove('active');
-            document.querySelector('.mobile-menu').classList.remove('active');
-        });
-
-        // Navigation entre sections
-        function navigateToSection(section) {
-            // Fermer le menu mobile
-            document.querySelector('.mobile-nav').classList.remove('active');
-            document.querySelector('.mobile-menu').classList.remove('active');
+            mobileNav.classList.toggle('active');
             
-            // Mise à jour de la navigation
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('data-section') === section) {
-                    link.classList.add('active');
-                }
-            });
-
-            // Simulation de navigation
-            switch(section) {
-                case 'home':
-                    resetSearch();
-                    showNotification('Bienvenue sur SmartDigitalPro !', 'success');
-                    break;
-                case 'products':
-                    showNotification('Affichage de tous les produits numériques', 'info');
-                    break;
-                case 'formations':
-                    filterProducts('formation');
-                    showNotification('Affichage des formations disponibles', 'info');
-                    break;
-                case 'services':
-                    showNotification('Section Services - En cours de développement', 'info');
-                    break;
-                case 'blog':
-                    showNotification('Blog - Prochainement disponible', 'info');
-                    break;
-                case 'contact':
-                    showNotification('Page de contact - En cours de développement', 'info');
-                    break;
-                default:
-                    showNotification('Section en développement', 'info');
+            // Empêcher le scroll du body quand le menu est ouvert
+            if (mobileNav.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
             }
         }
 
-        // Newsletter
+        // Fermer le menu mobile
+        document.querySelector('.mobile-nav-close').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.querySelector('.mobile-menu').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Gestion des liens de navigation mobile
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = this.dataset.section;
+                
+                // Fermer le menu mobile
+                document.querySelector('.mobile-nav').classList.remove('active');
+                document.querySelector('.mobile-menu').classList.remove('active');
+                document.body.style.overflow = '';
+                
+                // Naviguer vers la section
+                navigateToSection(section);
+            });
+        });
+
+        // Fonction de navigation
+        function navigateToSection(section) {
+            // Mettre à jour les liens de navigation actifs
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.section === section) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Logique de navigation (à adapter selon vos besoins)
+            switch(section) {
+                case 'home':
+                    resetSearch();
+                    break;
+                case 'products':
+                    filterProducts('all');
+                    break;
+                case 'formations':
+                    filterProducts('formation');
+                    break;
+                case 'services':
+                    alert('Page Services - À implémenter');
+                    break;
+                case 'blog':
+                    alert('Page Blog - À implémenter');
+                    break;
+                case 'contact':
+                    alert('Page Contact - À implémenter');
+                    break;
+                default:
+                    console.log('Section non reconnue:', section);
+            }
+        }
+
+        // Fonction d'inscription à la newsletter
         function subscribeNewsletter(event) {
             event.preventDefault();
             const email = document.getElementById('newsletterEmail').value;
             
             if (email) {
-                showNotification(`Merci ${email} ! Vous êtes maintenant abonné à notre newsletter.`, 'success');
+                alert(`Merci ! Vous êtes maintenant abonné avec l'email : ${email}`);
                 document.getElementById('newsletterEmail').value = '';
+                // Ici vous pourriez envoyer l'email à votre service de newsletter
             }
         }
 
-        // Réseaux sociaux
+        // Fonction d'ouverture des réseaux sociaux
         function openSocial(platform) {
-            const urls = {
+            const links = {
                 email: 'mailto:contact@smartdigitalpro.mg',
                 website: 'https://smartdigitalpro.mg',
                 linkedin: 'https://linkedin.com/company/smartdigitalpro',
                 telegram: 'https://t.me/smartdigitalpro'
             };
             
-            if (urls[platform]) {
-                window.open(urls[platform], '_blank');
+            if (links[platform]) {
+                if (platform === 'email') {
+                    window.location.href = links[platform];
+                } else {
+                    window.open(links[platform], '_blank');
+                }
             }
         }
 
-        // Utilitaires
-        function showLoadingSpinner() {
-            document.getElementById('loadingSpinner').style.display = 'block';
-        }
+        // Gestion des liens de navigation desktop
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = this.dataset.section;
+                navigateToSection(section);
+            });
+        });
 
-        function hideLoadingSpinner() {
-            document.getElementById('loadingSpinner').style.display = 'none';
-        }
+        // Animation au scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
 
-        function showNotification(message, type = 'info') {
-            const notification = document.createElement('div');
-            notification.className = `notification ${type}`;
-            notification.style.cssText = `
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: ${type === 'success' ? '#228B22' : type === 'error' ? '#DC143C' : '#007bff'};
-                color: white;
-                padding: 15px 20px;
-                border-radius: 8px;
-                box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-                z-index: 10000;
-                font-weight: 500;
-                max-width: 300px;
-                animation: slideIn 0.3s ease;
-            `;
-            notification.textContent = message;
+        // Fermer le menu mobile en cliquant en dehors
+        document.addEventListener('click', function(e) {
+            const mobileNav = document.querySelector('.mobile-nav');
+            const mobileMenu = document.querySelector('.mobile-menu');
             
-            document.body.appendChild(notification);
-            
-            setTimeout(() => {
-                notification.style.animation = 'slideOut 0.3s ease';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 3000);
-        }
-
-        function debounce(func, wait) {
-            let timeout;
-            return function executedFunction(...args) {
-                const later = () => {
-                    clearTimeout(timeout);
-                    func(...args);
-                };
-                clearTimeout(timeout);
-                timeout = setTimeout(later, wait);
-            };
-        }
-
-        function getFilterTitle() {
-            const titles = {
-                'all': 'Tous les produits numériques',
-                'canva': 'Modèles Canva',
-                'ebook': 'E-books et guides',
-                'formation': 'Formations vidéo',
-                'coaching': 'Services de coaching',
-                'calendar': 'Planners et calendriers',
-                'top-seller': 'Produits les plus vendus',
-                'madagascar': 'Produits spécial Madagascar'
-            };
-            return titles[currentFilter] || 'Produits numériques';
-        }
-
-        // CSS pour les animations
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
+            if (mobileNav.classList.contains('active') && 
+                !mobileNav.contains(e.target) && 
+                !mobileMenu.contains(e.target)) {
+                mobileNav.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                document.body.style.overflow = '';
             }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
+        });
     </script>
 </body>
 </html>

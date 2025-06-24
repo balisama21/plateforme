@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Digital-Marketing - Produits Numériques Madagascar</title>
     <style>
+        /* Styles CSS existants et nouveaux styles pour les formulaires et la page de détails */
         * {
             margin: 0;
             padding: 0;
@@ -18,7 +19,7 @@
             overflow-x: hidden;
         }
 
-        /* Header */
+        /* En-tête */
         .header {
             background: white;
             border-bottom: 1px solid #e0e0e0;
@@ -120,6 +121,17 @@
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(34, 139, 34, 0.3);
         }
+        
+        .btn-sell { /* Nouveau style pour le bouton "Vendre" */
+            background: #DC143C;
+            color: white;
+            border-color: #DC143C;
+        }
+
+        .btn-sell:hover {
+            background: #b8122e;
+            box-shadow: 0 4px 10px rgba(220, 20, 60, 0.3);
+        }
 
         .flag-mg {
             width: 32px;
@@ -151,7 +163,7 @@
             transform: scale(1.1);
         }
 
-        /* Mobile Menu */
+        /* Menu Mobile */
         .mobile-menu {
             display: none;
             flex-direction: column;
@@ -210,6 +222,7 @@
             border-bottom: 2px solid transparent;
             transition: all 0.3s;
             position: relative;
+            cursor: pointer;
         }
 
         .nav-link:hover, .nav-link.active {
@@ -233,7 +246,7 @@
             width: 100%;
         }
 
-        /* Mobile Navigation */
+        /* Navigation Mobile */
         .mobile-nav {
             display: none;
             position: fixed;
@@ -274,6 +287,7 @@
             text-align: left;
             width: 100%;
             box-sizing: border-box;
+            cursor: pointer;
         }
 
         .mobile-nav-link:hover {
@@ -304,11 +318,21 @@
             transform: rotate(90deg);
         }
 
-        /* Main Content */
+        /* Contenu Principal */
         .main {
             max-width: 1400px;
             margin: 0 auto;
             padding: 30px 20px;
+        }
+
+        /* Masquer toutes les sections principales par défaut */
+        .main > section {
+            display: none;
+        }
+        
+        /* Afficher la section active */
+        .main > section.active {
+            display: block;
         }
 
         .hero-section {
@@ -329,7 +353,7 @@
             margin-bottom: 30px;
         }
 
-        /* Search Results */
+        /* Résultats de recherche */
         .search-results {
             background: #e8f5e8;
             border: 1px solid #228B22;
@@ -400,13 +424,17 @@
             transform: translateY(-2px);
         }
 
-        /* Filters */
+        /* Filtres */
         .filters {
-            display: flex;
+            display: none; /* Masqué par défaut, géré par JS */
             flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 40px;
             align-items: center;
+        }
+
+        .filters.active {
+            display: flex;
         }
 
         .filter-btn {
@@ -438,13 +466,17 @@
             background: #b8122e;
         }
 
-        /* Products Grid */
+        /* Grille des produits */
         .products-grid {
-            display: grid;
+            display: none;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 25px;
             margin-bottom: 60px;
             transition: all 0.3s;
+        }
+
+        .products-grid.active {
+            display: grid;
         }
 
         .product-card {
@@ -490,12 +522,14 @@
             transform: scale(1.05);
         }
 
-        /* Fallback backgrounds si l'image ne charge pas */
+        /* Arrière-plans de secours si l'image ne se charge pas */
         .product-image.canva { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .product-image.ebook { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
         .product-image.formation { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
         .product-image.calendar { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
         .product-image.coaching { background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%); }
+        .product-image.webdesign { background: linear-gradient(135deg, #2af598 0%, #009efd 100%); }
+        .product-image.logistique { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
 
         .product-badge {
             position: absolute;
@@ -510,6 +544,11 @@
             animation: pulse 2s infinite;
             z-index: 10;
         }
+        /* Nouveau badge pour les produits récemment ajoutés */
+        .product-badge.new-badge {
+            background: #228B22; /* Vert pour "Nouveau" */
+        }
+
 
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -579,6 +618,10 @@
             font-size: 12px;
             margin-left: 8px;
         }
+        .product-badge.discount-badge { /* Specific style for discount badge if needed */
+            background: #DC143C;
+        }
+
 
         .product-actions {
             display: flex;
@@ -655,8 +698,225 @@
             background: #fff3cd;
             color: #856404;
         }
+        
+        /* Styles pour les sections de formulaire et de détails */
+        .form-section, .product-detail-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            max-width: 800px;
+            margin: 20px auto;
+        }
 
-        /* Loading Spinner */
+        .form-title, .detail-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"],
+        .form-group input[type="number"],
+        .form-group input[type="file"],
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #228B22;
+            box-shadow: 0 0 8px rgba(34, 139, 34, 0.2);
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .form-submit-btn {
+            background: #228B22;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .form-submit-btn:hover {
+            background: #1e7a1e;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(34, 139, 34, 0.3);
+        }
+
+        /* Styles pour la page de détail */
+        .product-detail-content {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .product-detail-image-container {
+            flex: 1;
+            min-width: 300px;
+            height: 350px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        
+        .product-detail-image-container img, .product-detail-image-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-detail-info {
+            flex: 1;
+        }
+
+        .detail-category {
+            font-size: 14px;
+            color: #228B22;
+            background: rgba(34, 139, 34, 0.1);
+            padding: 4px 10px;
+            border-radius: 12px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .detail-seller {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .detail-price {
+            font-size: 28px;
+            font-weight: bold;
+            color: #228B22;
+            margin-bottom: 20px;
+        }
+
+        .detail-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .detail-like-btn {
+            background: white;
+            border: 1px solid #DC143C;
+            color: #DC143C;
+            width: 50px;
+            height: 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .detail-like-btn:hover {
+            background: #DC143C;
+            color: white;
+        }
+
+        .detail-description {
+            line-height: 1.7;
+            color: #555;
+        }
+
+        /* Section des commentaires */
+        .comments-section {
+            margin-top: 40px;
+            border-top: 1px solid #eee;
+            padding-top: 30px;
+        }
+
+        .comments-section h4 {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        #commentsList .comment-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        #commentsList .comment-author {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        #commentsList .comment-text {
+            color: #666;
+        }
+        
+        .comment-form {
+            margin-top: 20px;
+        }
+        
+        .comment-form h5 {
+            margin-bottom: 10px;
+        }
+
+        .comment-form textarea {
+            width: 100%;
+            height: 80px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+        
+        .comment-form button {
+            background: #228B22;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .comment-form button:hover {
+            background: #1e7a1e;
+        }
+
+
+        /* Indicateur de chargement */
         .loading-spinner {
             display: none;
             text-align: center;
@@ -678,7 +938,7 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Newsletter Section */
+        /* Section Newsletter */
         .newsletter-section {
             background: linear-gradient(135deg, #228B22 0%, #DC143C 100%);
             color: white;
@@ -766,11 +1026,12 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.15);
         }
 
-        /* Footer */
+        /* Pied de page */
         .footer {
             background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
             color: white;
             padding: 60px 20px 20px;
+            width: 100%;
         }
 
         .footer-container {
@@ -810,6 +1071,7 @@
             color: #bdc3c7;
             text-decoration: none;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
         .footer-section a:hover {
@@ -857,6 +1119,133 @@
             28% { transform: scale(1); }
             42% { transform: scale(1.2); }
             70% { transform: scale(1); }
+        }
+
+        /* NOUVEAUX STYLES : MODALE D'AUTHENTIFICATION */
+        .auth-modal {
+            display: none; /* Caché par défaut */
+            position: fixed;
+            z-index: 3000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            backdrop-filter: blur(5px);
+        }
+
+        .auth-modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 450px;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            position: relative;
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .auth-modal .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .auth-modal .close-btn:hover,
+        .auth-modal .close-btn:focus {
+            color: #000;
+        }
+        
+        .auth-modal h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            background: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .google-btn:hover {
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            color: #999;
+        }
+        
+        .auth-form-toggle {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .auth-form-toggle a {
+            color: #228B22;
+            text-decoration: none;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        .auth-form-toggle a:hover {
+            text-decoration: underline;
+        }
+
+        /* NOUVEAUX STYLES : Boutons d'édition/suppression */
+        .product-owner-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .edit-btn, .delete-btn {
+            flex: 1;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: none;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .edit-btn {
+            background-color: #ffc107; /* Jaune */
+        }
+        .edit-btn:hover {
+            background-color: #e0a800;
+        }
+        
+        .delete-btn {
+            background-color: #DC143C; /* Rouge */
+        }
+        .delete-btn:hover {
+            background-color: #b8122e;
         }
 
         /* Responsive */
@@ -941,11 +1330,19 @@
                 width: 100%;
                 max-width: 200px;
             }
+
+            .product-detail-image-container {
+                max-width: 100%;
+                height: 300px;
+            }
+            .auth-modal-content {
+                margin: 20% auto;
+            }
         }
 
         @media (max-width: 480px) {
             .products-grid {
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr; /* Une seule colonne sur les très petits écrans pour une meilleure lisibilité */
                 gap: 15px;
             }
 
@@ -984,26 +1381,49 @@
             .download-btn, .preview-btn {
                 width: 100%;
             }
+
+            .form-section, .product-detail-section {
+                padding: 20px;
+            }
+
+            .form-title, .detail-title {
+                font-size: 22px;
+            }
+
+            .product-detail-content {
+                flex-direction: column;
+            }
+
+            .product-detail-image-container {
+                min-width: unset;
+                height: 250px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="header-container">
             <div class="logo">SmartDigitalPro</div>
             
             <div class="search-container">
                 <input type="text" class="search-bar" id="searchInput" placeholder="Rechercher des produits numériques...">
-                <button class="search-btn" onclick="performSearch()">🔍</button>
+                <button class="search-btn">🔍</button>
             </div>
             
             <div class="header-actions">
-                <a href="#" class="btn-header">Se connecter</a>
-                <a href="#" class="btn-header">S'inscrire</a>
+                <a href="#" class="btn-header btn-sell" data-action="sell">Vendre</a>
+                <div id="auth-links">
+                    <a href="#" class="btn-header" data-action="login">Se connecter</a>
+                    <a href="#" class="btn-header" data-action="register">S'inscrire</a>
+                </div>
+                <div id="user-profile" style="display: none;">
+                    <span id="username-display" style="font-weight: 500; margin-right: 10px;"></span>
+                    <a href="#" class="btn-header" data-action="logout">Déconnexion</a>
+                </div>
                 <div class="flag-mg"></div>
                 <div class="cart-icon">🛒</div>
-                <div class="mobile-menu" onclick="toggleMobileMenu()">
+                <div class="mobile-menu">
                     <span></span>
                     <span></span>
                     <span></span>
@@ -1012,663 +1432,945 @@
         </div>
     </header>
 
-    <!-- Navigation -->
     <nav class="nav">
         <div class="nav-container">
-            <a href="#" class="nav-link active" data-section="home">Accueil</a>
-            <a href="#" class="nav-link" data-section="products">Produits</a>
-            <a href="#" class="nav-link" data-section="formations">Formations</a>
-            <a href="#" class="nav-link" data-section="services">Services</a>
-            <a href="#" class="nav-link" data-section="blog">Blog</a>
-            <a href="#" class="nav-link" data-section="contact">Contact</a>
+            <a class="nav-link" data-section="home">Accueil</a>
+            <a class="nav-link" data-section="products">Produits</a>
+            <a class="nav-link" data-section="formations">Formations</a>
+            <a class="nav-link" data-section="services">Services</a>
+            <a class="nav-link" data-section="blog">Blog</a>
+            <a class="nav-link" data-section="contact">Contact</a>
         </div>
     </nav>
 
-    <!-- Mobile Navigation -->
     <div class="mobile-nav">
         <div class="mobile-nav-close">×</div>
         <div class="mobile-nav-container">
-            <a href="#" class="mobile-nav-link" data-section="home">🏠 Accueil</a>
-            <a href="#" class="mobile-nav-link" data-section="products">📦 Produits</a>
-            <a href="#" class="mobile-nav-link" data-section="formations">🎓 Formations</a>
-            <a href="#" class="mobile-nav-link" data-section="services">⚙️ Services</a>
-            <a href="#" class="mobile-nav-link" data-section="blog">📝 Blog</a>
-            <a href="#" class="mobile-nav-link" data-section="contact">📧 Contact</a>
+            <a class="mobile-nav-link" data-section="home">🏠 Accueil</a>
+            <a class="mobile-nav-link" data-action="sell">💰 Vendre un produit</a>
+            <a class="mobile-nav-link" data-section="products">📦 Produits</a>
+            <a class="mobile-nav-link" data-section="formations">🎓 Formations</a>
+            <a class="mobile-nav-link" data-section="services">⚙️ Services</a>
+            <a class="mobile-nav-link" data-section="blog">📝 Blog</a>
+            <a class="mobile-nav-link" data-section="contact">📧 Contact</a>
         </div>
     </div>
 
-    <!-- Main Content -->
     <main class="main">
-        <!-- Hero Section -->
-        <section class="hero-section">
-            <h1class="hero-title" id="heroTitle">Les produits numériques les plus vendus</h1>
+        <section class="hero-section" id="home">
+            <h1 class="hero-title" id="heroTitle">Les produits numériques les plus vendus</h1>
             <p class="hero-subtitle" id="heroSubtitle">1000+ résultats pertinents</p>
         </section>
-
-        <!-- Search Results Display -->
-        <div class="search-results" id="searchResults">
-            <div class="search-results-text" id="searchResultsText"></div>
-            <div class="search-results-count" id="searchResultsCount"></div>
-        </div>
-
-        <!-- No Results Display -->
-        <div class="no-results" id="noResults">
-            <div class="no-results-icon">🔍</div>
-            <div class="no-results-title">Aucun produit ne correspond à votre recherche</div>
-            <div class="no-results-text">Essayez d'autres mots-clés ou parcourez nos catégories populaires.</div>
-            <button class="clear-search-btn" onclick="resetSearch()">Effacer la recherche</button>
-        </div>
-
-        <!-- Loading Spinner -->
-        <div class="loading-spinner" id="loadingSpinner">
-            <div class="spinner"></div>
-            <p>Recherche en cours...</p>
-        </div>
-
-        <!-- Filters -->
-        <div class="filters">
-            <button class="filter-btn top-seller" onclick="filterProducts('top-seller')">Top vente</button>
-            <button class="filter-btn active" onclick="filterProducts('all')">Téléchargement numérique</button>
-            <button class="filter-btn" onclick="filterProducts('madagascar')">Pays : Madagascar</button>
-            <button class="filter-btn" onclick="filterProducts('canva')">Modèles Canva</button>
-            <button class="filter-btn" onclick="filterProducts('ebook')">E-books</button>
-            <button class="filter-btn" onclick="filterProducts('formation')">Formations vidéo</button>
-            <button class="filter-btn" onclick="filterProducts('coaching')">Coaching</button>
-        </div>
-
-        <!-- Products Grid -->
-        <div class="products-grid" id="productsGrid">
-            <!-- Product 1 -->
-            <div class="product-card" data-category="canva" data-keywords="canva modèles templates réseaux sociaux instagram facebook">
-                <div class="product-image canva">
-                   <img src="https://raw.githubusercontent.com/balisama21/plateforme/main/canva.jpg" alt="100 Modèles Canva">
-                    <div class="product-badge">HOT</div>
-                </div>
-                <div class="product-info">
-                    <div class="product-category">Modèles Canva</div>
-                    <h3 class="product-title">100 modèles Canva pour les réseaux sociaux</h3>
-                    <div class="product-rating">
-                        <div class="stars">★★★★★</div>
-                        <span class="rating-count">(2.4K)</span>
-                    </div>
-                    <div class="product-price">
-                        25 000 MGA
-                        <span class="old-price">35 000 MGA</span>
-                        <span class="discount">-29%</span>
-                    </div>
-                    <div class="product-status free">Téléchargement gratuit</div>
-                    <div class="product-actions">
-                        <button class="download-btn" onclick="downloadProduct('canva-templates.zip', 'free')">
-                            📥 Télécharger
-                        </button>
-                        <button class="preview-btn" onclick="previewProduct('canva-preview')">Aperçu</button>
-                    </div>
-                </div>
+        
+        <section id="productsContainer">
+            <div class="search-results" id="searchResults">
+                <div class="search-results-text" id="searchResultsText"></div>
+                <div class="search-results-count" id="searchResultsCount"></div>
             </div>
 
-            <!-- Product 2 -->
-            <div class="product-card" data-category="ebook" data-keywords="ebook business entrepreneur madagascar lancer startup">
-                <div class="product-image ebook">
-                    <img src="https://github.com/balisama21/balisama-site/blob/main/ebook-business.jpg" alt="E-book Business">
-                </div>
-                <div class="product-info">
-                    <div class="product-category">E-book</div>
-                    <h3 class="product-title">E-book : Lancer son business en ligne à Madagascar</h3>
-                    <div class="product-rating">
-                        <div class="stars">★★★★★</div>
-                        <span class="rating-count">(1.8K)</span>
-                    </div>
-                    <div class="product-price">15 000 MGA</div>
-                    <div class="product-status premium">Produit premium</div>
-                    <div class="product-actions">
-                        <button class="download-btn premium" onclick="downloadProduct('business-ebook.pdf', 'premium', 15000)">
-                            💳 Acheter & Télécharger
-                        </button>
-                        <button class="preview-btn" onclick="previewProduct('ebook-preview')">Aperçu</button>
-                    </div>
-                </div>
+            <div class="no-results" id="noResults">
+                <div class="no-results-icon">🔍</div>
+                <div class="no-results-title">Aucun produit ne correspond à votre recherche</div>
+                <div class="no-results-text">Essayez d'autres mots-clés ou parcourez nos catégories populaires.</div>
+                <button class="clear-search-btn">Effacer la recherche</button>
             </div>
 
-            <!-- Product 3 -->
-            <div class="product-card" data-category="formation" data-keywords="formation marketing digital 2025 cours vidéo apprentissage">
-                <div class="product-image formation">
-                    <img src="https://github.com/balisama21/balisama-site/blob/main/formation-marketing.jpg" alt="Formation Marketing Digital">
-                    <div class="product-badge">NOUVEAU</div>
-                </div>
-                <div class="product-info">
-                    <div class="product-category">Formation</div>
-                    <h3 class="product-title">Formation complète - Marketing digital 2025</h3>
-                    <div class="product-rating">
-                        <div class="stars">★★★★★</div>
-                        <span class="rating-count">(896)</span>
-                    </div>
-                    <div class="product-price">89 000 MGA</div>
-                    <div class="product-status login-required">Connexion requise</div>
-                    <div class="product-actions">
-                        <button class="download-btn premium" onclick="downloadProduct('formation-marketing.zip', 'login-required', 89000)">
-                            🎓 Accéder à la formation
-                        </button>
-                        <button class="preview-btn" onclick="previewProduct('formation-preview')">Aperçu</button>
-                    </div>
-                </div>
+            <div class="loading-spinner" id="loadingSpinner">
+                <div class="spinner"></div>
+                <p>Recherche en cours...</p>
             </div>
 
-            <!-- Product 4 -->
-            <div class="product-card" data-category="calendar" data-keywords="calendrier contenu planification idées 365 jours">
-                <div class="product-image calendar">
-                   <img src="https://raw.githubusercontent.com/balisama21/plateforme/main/canva.jpg" alt="calendrier contenu">
-                </div>
-                <div class="product-info">
-                    <div class="product-category">Planner</div>
-                    <h3 class="product-title">Calendrier de contenu PDF - 365 jours d'idées</h3>
-                    <div class="product-rating">
-                        <div class="stars">★★★★☆</div>
-                        <span class="rating-count">(654)</span>
-                    </div>
-                    <div class="product-price">12 000 MGA</div>
-                    <div class="product-status free">Téléchargement gratuit</div>
-                    <div class="product-actions">
-                        <button class="download-btn" onclick="downloadProduct('calendrier-contenu.pdf', 'free')">
-                            📥 Télécharger
-                        </button>
-                        <button class="preview-btn" onclick="previewProduct('calendar-preview')">Aperçu</button>
-                    </div>
-                </div>
+            <div class="filters" id="filtersSection">
+                <button class="filter-btn top-seller" data-filter="top-seller">Top vente</button>
+                <button class="filter-btn" data-filter="all">Téléchargement numérique</button>
+                <button class="filter-btn" data-filter="madagascar">Pays : Madagascar</button>
+                <button class="filter-btn" data-filter="canva">Modèles Canva</button>
+                <button class="filter-btn" data-filter="ebook">E-books</button>
+                <button class="filter-btn" data-filter="formation">Formations vidéo</button>
+                <button class="filter-btn" data-filter="coaching">Coaching</button>
             </div>
 
-            <!-- Product 5 -->
-            <div class="product-card" data-category="coaching" data-keywords="coaching zoom accompagnement personnel stratégie digitale">
-                <div class="product-image coaching">
-                    <img src="https://github.com/balisama21/balisama-site/blob/main/coaching-zoom.jpg" alt="Coaching Zoom">
-                    <div class="product-badge">PREMIUM</div>
+            <div class="products-grid" id="productsGridSection">
                 </div>
-                <div class="product-info">
-                    <div class="product-category">Coaching</div>
-                    <h3 class="product-title">Accompagnement personnalisé Zoom 1h - Stratégie digitale</h3>
-                    <div class="product-rating">
-                        <div class="stars">★★★★★</div>
-                        <span class="rating-count">(127)</span>
+        </section>
+
+        <section class="form-section" id="sellProductForm">
+            <h2 class="form-title">Proposer un nouveau produit ou service</h2>
+            <form id="productPublishForm">
+                <input type="hidden" id="editingProductId" value="">
+                <div class="form-group">
+                    <label for="productTitle">Titre du produit ou service :</label>
+                    <input type="text" id="productTitle" name="productTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="productCategory">Catégorie :</label>
+                    <select id="productCategory" name="productCategory" required>
+                        <option value="">Sélectionnez une catégorie</option>
+                        <option value="canva">Modèles Canva</option>
+                        <option value="ebook">E-books</option>
+                        <option value="formation">Formations vidéo</option>
+                        <option value="coaching">Coaching</option>
+                        <option value="webdesign">Web Design</option>
+                        <option value="logistique">Logistique</option>
+                        <option value="other">Autres</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="productDescription">Description :</label>
+                    <textarea id="productDescription" name="productDescription" rows="6" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="productFile">Image ou fichier à uploader (PDF, vidéo, zip, etc.) :</label>
+                    <input type="file" id="productFile" name="productFile" accept=".pdf,.zip,.mp4,.jpg,.png,.gif">
+                </div>
+                <div class="form-group">
+                    <label for="productPrice">Prix (MGA) :</label>
+                    <input type="number" id="productPrice" name="productPrice" step="100" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="productPreview">Aperçu (URL ou fichier, optionnel) :</label>
+                    <input type="text" id="productPreview" name="productPreview" placeholder="URL de l'aperçu ou uploader un fichier">
+                    <input type="file" id="productPreviewFile" name="productPreviewFile" accept=".pdf,.mp4,.jpg,.png,.gif">
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="form-submit-btn">Soumettre le produit</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="form-section" id="downloadForm">
+            <h2 class="form-title">Télécharger votre produit</h2>
+            <p style="text-align: center; margin-bottom: 20px; color: #666;">Veuillez remplir vos informations pour accéder au téléchargement.</p>
+            <form id="downloadInfoForm">
+                <div class="form-group">
+                    <label for="downloadName">Votre Nom :</label>
+                    <input type="text" id="downloadName" name="downloadName" required>
+                </div>
+                <div class="form-group">
+                    <label for="downloadEmail">Votre Email :</label>
+                    <input type="email" id="downloadEmail" name="downloadEmail" required>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="form-submit-btn">Accéder au téléchargement</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="product-detail-section" id="productDetail">
+            <h2 class="detail-title" id="detailProductTitle">Titre du Produit Détaillé</h2>
+            <div class="product-detail-content">
+                <div class="product-detail-image-container" id="detailProductImage">
+                    Aperçu du Produit
+                </div>
+                <div class="product-detail-info">
+                    <div class="detail-category" id="detailProductCategory">Catégorie</div>
+                    <p class="detail-seller">Vendu par : <span id="detailProductSeller">Nom du Vendeur</span></p>
+                    <div class="detail-price" id="detailProductPrice">0 MGA</div>
+                    <div class="detail-actions">
+                        <button class="download-btn" id="detailDownloadBtn" data-action="download">Télécharger</button>
+                        <button class="detail-like-btn" id="detailLikeBtn" data-action="like">❤️ <span id="likeCount">0</span></button>
                     </div>
-                    <div class="product-price">45 000 MGA</div>
-                    <div class="product-status premium">Service premium</div>
-                    <div class="product-actions">
-                        <button class="download-btn premium" onclick="downloadProduct('coaching-session', 'booking', 45000)">
-                            📅 Réserver maintenant
-                        </button>
-                        <button class="preview-btn" onclick="previewProduct('coaching-info')">Plus d'infos</button>
-                    </div>
+                    <p class="detail-description" id="detailProductDescription">Description complète du produit/service.</p>
                 </div>
             </div>
-
-            <!-- Product 6 -->
-            <div class="product-card" data-category="canva" data-keywords="prompts chatgpt ia intelligence artificielle entrepreneurs">
-                <div class="product-image canva">
-                    <img src="https://github.com/balisama21/balisama-site/blob/main/chatgpt-prompts.jpg" alt="ChatGPT Prompts">
-                </div>
-                <div class="product-info">
-                    <div class="product-category">IA Tools</div>
-                    <h3 class="product-title">50 prompts ChatGPT pour entrepreneurs malgaches</h3>
-                    <div class="product-rating">
-                        <div class="stars">★★★★★</div>
-                        <span class="rating-count">(2.1K)</span>
+            <div class="comments-section">
+                <h4>Commentaires (<span id="commentCount">0</span>)</h4>
+                <div id="commentsList">
                     </div>
-                    <div class="product-price">8 000 MGA</div>
-                    <div class="product-status free">Téléchargement gratuit</div>
-                    <div class="product-actions">
-                        <button class="download-btn" onclick="downloadProduct('chatgpt-prompts.pdf', 'free')">
-                            📥 Télécharger
-                        </button>
-                        <button class="preview-btn" onclick="previewProduct('prompts-preview')">Aperçu</button>
-                    </div>
+                <div class="comment-form" data-action="comment">
+                    <h5>Laisser un commentaire :</h5>
+                    <textarea id="newCommentText" placeholder="Écrivez votre commentaire ici..."></textarea>
+                    <button id="submitCommentBtn">Soumettre</button>
                 </div>
             </div>
+        </section>
 
-            <!-- Product 7 -->
-            <div class="product-card" data-category="ebook" data-keywords="guide freelance travail indépendant madagascar">
-                <div class="product-image ebook">
-                    <img src="https://github.com/balisama21/balisama-site/blob/main/freelance-guide.jpg" alt="Guide Freelance">
-                </div>
-                <div class="product-info">
-                    <div class="product-category">E-book</div>
-                    <h3 class="product-title">Guide complet du freelance à Madagascar</h3>
-                    <div class="product-rating">
-                        <div class="stars">★★★★☆</div>
-                        <span class="rating-count">(423)</span>
-                    </div>
-                    <div class="product-price">18 000 MGA</div>
-                    <div class="product-status premium">Produit premium</div>
-                    <div class="product-actions">
-                        <button class="download-btn premium" onclick="downloadProduct('freelance-guide.pdf', 'premium', 18000)">
-                            💳 Acheter & Télécharger
-                        </button>
-                        <button class="preview-btn" onclick="previewProduct('freelance-preview')">Aperçu</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 8 -->
-            <div class="product-card" data-category="formation" data-keywords="wordpress création site web développement">
-                <div class="product-image formation">
-                    <img src="https://github.com/balisama21/plateforme/blob/main/canva.jpg" alt="Formation WordPress">
-                </div>
-                <div class="product-info">
-                    <div class="product-category">Formation</div>
-                    <h3 class="product-title">Créer son site WordPress professionnel</h3>
-                    <div class="product-rating">
-                        <div class="stars">★★★★★</div>
-                        <span class="rating-count">(756)</span>
-                    </div>
-                    <div class="product-price">65 000 MGA</div>
-                    <div class="product-status login-required">Connexion requise</div>
-                    <div class="product-actions">
-                        <button class="download-btn premium" onclick="downloadProduct('wordpress-formation.zip', 'login-required', 65000)">
-                            🎓 Accéder à la formation
-                        </button>
-                        <button class="preview-btn" onclick="previewProduct('wordpress-preview')">Aperçu</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Newsletter Section -->
-        <section class="newsletter-section">
+        <section class="newsletter-section" id="newsletterSection">
             <div class="newsletter-container">
-                <h2 class="newsletter-title">Restez informé de nos nouveautés</h2>
-                <p class="newsletter-subtitle">Recevez gratuitement nos astuces, offres et formations directement par e-mail.</p>
-                <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                    <input type="email" class="newsletter-input" placeholder="Votre adresse e-mail" required id="newsletterEmail">
+                <h2 class="newsletter-title">Rejoignez notre Newsletter</h2>
+                <p class="newsletter-subtitle">Recevez les dernières offres et astuces en marketing digital directement dans votre boîte de réception.</p>
+                <form class="newsletter-form">
+                    <input type="email" class="newsletter-input" placeholder="Votre adresse email" required>
                     <button type="submit" class="newsletter-btn">S'abonner</button>
                 </form>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
+    <div id="authModal" class="auth-modal">
+        <div class="auth-modal-content">
+            <span class="close-btn">&times;</span>
+
+            <div id="loginForm">
+                <h2>Se connecter</h2>
+                <form>
+                    <button type="button" class="google-btn">
+                        <img src="https://www.google.com/favicon.ico" alt="Google icon" width="20" height="20">
+                        Continuer avec Google
+                    </button>
+                    <div class="divider">ou</div>
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Mot de passe</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="form-submit-btn" data-action="login-submit">Se connecter</button>
+                    </div>
+                    <div class="auth-form-toggle">
+                        <p>Pas encore de compte ? <a data-action="show-register">S'inscrire</a></p>
+                    </div>
+                </form>
+            </div>
+
+            <div id="registerForm" style="display:none;">
+                <h2>Créer un compte</h2>
+                <form>
+                     <button type="button" class="google-btn">
+                        <img src="https://www.google.com/favicon.ico" alt="Google icon" width="20" height="20">
+                        S'inscrire avec Google
+                    </button>
+                    <div class="divider">ou</div>
+                    <div class="form-group">
+                        <label for="registerName">Nom complet</label>
+                        <input type="text" id="registerName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email</label>
+                        <input type="email" id="registerEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Mot de passe</label>
+                        <input type="password" id="registerPassword" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="form-submit-btn" data-action="register-submit">S'inscrire</button>
+                    </div>
+                    <div class="auth-form-toggle">
+                        <p>Déjà un compte ? <a data-action="show-login">Se connecter</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
     <footer class="footer">
         <div class="footer-container">
             <div class="footer-content">
                 <div class="footer-section">
                     <h3>SmartDigitalPro</h3>
-                    <p>Votre plateforme de référence pour les produits numériques à Madagascar. Nous proposons des solutions digitales de qualité pour entrepreneurs, créateurs et professionnels.</p>
+                    <p>Votre plateforme de référence pour les produits et services numériques à Madagascar. Boostez votre business avec nos solutions innovantes.</p>
                     <div class="social-icons">
-                        <div class="social-icon" onclick="openSocial('email')">📧</div>
-                        <div class="social-icon" onclick="openSocial('website')">🌐</div>
-                        <div class="social-icon" onclick="openSocial('linkedin')">💼</div>
-                        <div class="social-icon" onclick="openSocial('telegram')">📱</div>
+                        <div class="social-icon">F</div>
+                        <div class="social-icon">I</div>
+                        <div class="social-icon">L</div>
                     </div>
                 </div>
-
                 <div class="footer-section">
-                    <h3>Produits</h3>
+                    <h3>Liens Rapides</h3>
                     <ul>
-                        <li><a href="#" onclick="filterProducts('canva')">Modèles Canva</a></li>
-                        <li><a href="#" onclick="filterProducts('ebook')">E-books</a></li>
-                        <li><a href="#" onclick="filterProducts('formation')">Formations</a></li>
-                        <li><a href="#" onclick="filterProducts('coaching')">Coaching</a></li>
+                        <li><a data-section="home">Accueil</a></li>
+                        <li><a data-section="products">Produits</a></li>
+                        <li><a data-section="formations">Formations</a></li>
+                        <li><a data-section="services">Services</a></li>
+                        <li><a data-section="blog">Blog</a></li>
+                        <li><a data-section="newsletterSection">S'abonner</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-section">
-                    <h3>Services</h3>
+                    <h3>Support</h3>
                     <ul>
-                        <li><a href="#" onclick="navigateToSection('services')">Marketing Digital</a></li>
-                        <li><a href="#" onclick="navigateToSection('services')">Développement Web</a></li>
-                        <li><a href="#" onclick="navigateToSection('services')">Intelligence Artificielle</a></li>
-                        <li><a href="#" onclick="navigateToSection('services')">Formation & Conseil</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Contactez-nous</a></li>
+                        <li><a href="#">Politique de Confidentialité</a></li>
+                        <li><a href="#">Conditions Générales</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-section">
                     <h3>Contact</h3>
-                    <ul>
-                        <li><a href="mailto:contact@smartdigitalpro.mg">📧 contact@smartdigitalpro.mg</a></li>
-                        <li>📍 Antananarivo, Madagascar</li>
-                        <li>🕒 Support 24/7</li>
-                        <li><a href="#" onclick="navigateToSection('contact')">📞 Nous contacter</a></li>
-                    </ul>
+                    <p>Antananarivo, Madagascar</p>
+                    <p>Email: contact@smartdigitalpro.mg</p>
+                    <p>Téléphone: +261 32 12 345 67</p>
                 </div>
             </div>
-
             <div class="footer-bottom">
-                <p>© 2025 SmartDigitalPro Madagascar Par Maminirina Balsama. Tous droits réservés. | Fait avec <span class="heart">❤️</span> à Madagascar</p>
+                &copy; 2024 SmartDigitalPro. Tous droits réservés. Fait avec <span class="heart">❤️</span> à Madagascar.
             </div>
         </div>
     </footer>
 
-    <script>
-        // Variables globales
-        let currentFilter = 'all';
-        let searchTerm = '';
-        let allProducts = [];
+    <script type="module">
+        // --- AUTHENTIFICATION SIMULÉE ---
+        let authState = {
+            isLoggedIn: false,
+            currentUser: null // ex: { id: 'user1', name: 'Jean Dupont' }
+        };
+        
+        const users = [
+            { id: 'user1', name: 'Jean Dupont', email: 'jean@test.com', password: 'password123' }
+        ];
 
-        // Initialisation
-        document.addEventListener('DOMContentLoaded', function() {
-            allProducts = Array.from(document.querySelectorAll('.product-card'));
-            updateProductCount();
+        let products = [
+            {
+                id: 'product1',
+                creatorId: 'user1',
+                title: '100 modèles Canva pour les réseaux sociaux',
+                category: 'Modèles Canva',
+                categorySlug: 'canva',
+                description: 'Un pack complet de 100 modèles Canva professionnels et personnalisables pour dynamiser votre présence sur les réseaux sociaux. Idéal pour Instagram, Facebook, et plus encore. Gagnez du temps et créez du contenu percutant en quelques clics.',
+                image: 'https://raw.githubusercontent.com/balisama21/plateforme/main/canva.jpg',
+                price: 25000,
+                oldPrice: 35000,
+                discount: 29,
+                seller: 'Jean Dupont',
+                likes: 1250,
+                isTopSeller: true,
+                comments: [
+                    { author: 'Utilisateur Alpha', text: 'Super produit, très utile pour ma stratégie marketing !' },
+                    { author: 'Designer Pro', text: 'Les modèles sont très bien conçus et faciles à modifier. Je recommande !' }
+                ]
+            },
+            {
+                id: 'product2',
+                creatorId: 'user2',
+                title: 'E-book : Les fondamentaux du Marketing Digital',
+                category: 'E-books',
+                categorySlug: 'ebook',
+                description: 'Découvrez les bases essentielles du marketing digital avec cet e-book complet. Apprenez le SEO, le SEM, le marketing de contenu, les réseaux sociaux et bien plus encore pour propulser votre activité en ligne.',
+                image: 'https://raw.githubusercontent.com/balisama21/plateforme/main/ebook.jpg',
+                price: 15000,
+                oldPrice: null,
+                discount: null,
+                seller: 'DigitalExpert',
+                likes: 800,
+                isTopSeller: false,
+                comments: [
+                    { author: 'Lecteur Curieux', text: 'Très instructif, j\'ai appris beaucoup de choses.' },
+                    { author: 'Entrepreneur Débutant', text: 'Une excellente ressource pour commencer en marketing digital.' }
+                ]
+            },
+            {
+                id: 'product3',
+                creatorId: 'user3',
+                title: 'Formation complète Adobe Premiere Pro (Débutant)',
+                category: 'Formations Vidéo',
+                categorySlug: 'formation',
+                description: 'Maîtrisez Adobe Premiere Pro du débutant à un niveau intermédiaire avec cette formation vidéo détaillée. Apprenez le montage, l\'étalonnage, l\'ajout d\'effets et l\'exportation de vos projets pour des vidéos de qualité professionnelle.',
+                image: 'https://raw.githubusercontent.com/balisama21/plateforme/main/formation.jpg',
+                price: 50000,
+                oldPrice: 70000,
+                discount: 28,
+                seller: 'VideoMaestro',
+                likes: 2100,
+                isTopSeller: true,
+                comments: [
+                    { author: 'Monteur Junior', text: 'La formation est très claire et les exercices pratiques sont super !' },
+                    { author: 'Apprenti Vidéaste', text: 'J\'ai enfin compris comment utiliser Premiere Pro, merci !' }
+                ]
+            },
+            {
+                id: 'product4',
+                creatorId: 'user4',
+                title: 'Calendrier Éditorial 2024 pour Réseaux Sociaux',
+                category: 'Outils',
+                categorySlug: 'outils',
+                description: 'Organisez votre contenu sur les réseaux sociaux avec notre calendrier éditorial pré-rempli pour 2024. Planifiez vos publications, suivez vos performances et optimisez votre stratégie de contenu tout au long de l\'année.',
+                image: 'https://raw.githubusercontent.com/balisama21/plateforme/main/calendar.jpg',
+                price: 10000,
+                oldPrice: null,
+                discount: null,
+                seller: 'ContentStrategist',
+                likes: 450,
+                isTopSeller: false,
+                comments: [
+                    { author: 'Community Manager', text: 'Indispensable pour la gestion de mes réseaux sociaux.' }
+                ]
+            },
+            {
+                id: 'product5',
+                creatorId: 'user1',
+                title: 'Séance de Coaching Marketing Personnalisé 1H',
+                category: 'Coaching',
+                categorySlug: 'coaching',
+                description: 'Bénéficiez d\'une séance de coaching personnalisée d\'une heure pour discuter de votre stratégie marketing, résoudre vos défis spécifiques et obtenir des conseils d\'experts adaptés à votre entreprise.',
+                image: 'https://raw.githubusercontent.com/balisama21/plateforme/main/coaching.jpg',
+                price: 80000,
+                oldPrice: null,
+                discount: null,
+                seller: 'Jean Dupont',
+                likes: 320,
+                isTopSeller: false,
+                comments: [
+                    { author: 'Client Satisfait', text: 'La séance a été très enrichissante et m\'a donné une nouvelle perspective.' }
+                ]
+            },
+            {
+                id: 'product6',
+                creatorId: 'user2',
+                title: '50 Modèles de Site Web Responsive (HTML/CSS)',
+                category: 'Web Design',
+                categorySlug: 'webdesign',
+                description: 'Un ensemble de 50 modèles de sites web modernes et entièrement responsives, conçus avec HTML et CSS. Parfait pour les développeurs ou les agences souhaitant démarrer rapidement des projets professionnels.',
+                image: 'https://placehold.co/600x400/98d698/ffffff?text=Modèles+Web',
+                price: 30000,
+                oldPrice: null,
+                discount: null,
+                seller: 'WebCrafters Mada',
+                likes: 750,
+                isTopSeller: false,
+                comments: [
+                    { author: 'Développeur Junior', text: 'Ces modèles sont un gain de temps incroyable. Très adaptables !' }
+                ]
+            },
+            {
+                id: 'product7',
+                creatorId: 'user3',
+                title: 'Outil de Gestion de Stock Simple pour PME',
+                category: 'Outils',
+                categorySlug: 'logistique',
+                description: 'Un outil intuitif basé sur Excel (ou Google Sheets) pour les petites et moyennes entreprises. Suivez votre inventaire, gérez les entrées/sorties et optimisez vos stocks facilement.',
+                image: 'https://placehold.co/600x400/add8e6/000000?text=Outil+Logistique',
+                price: 20000,
+                oldPrice: null,
+                discount: null,
+                seller: 'SolutionsEntreprise',
+                likes: 300,
+                isTopSeller: false,
+                comments: [
+                    { author: 'Gérant PME', text: 'Très pratique pour nos besoins basiques. Facile à prendre en main.' }
+                ]
+            }
+        ];
+
+        let currentProductId = null;
+
+        // --- DOM ELEMENTS ---
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileNav = document.querySelector('.mobile-nav');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.querySelector('.search-btn');
+        const clearSearchBtn = document.querySelector('.clear-search-btn');
+        const productsGrid = document.getElementById('productsGridSection');
+        const filtersSection = document.getElementById('filtersSection');
+        const allSections = document.querySelectorAll('.main > section');
+        const authModal = document.getElementById('authModal');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const authLinks = document.getElementById('auth-links');
+        const userProfile = document.getElementById('user-profile');
+        const usernameDisplay = document.getElementById('username-display');
+
+        // --- FUNCTIONS ---
+
+        function toggleMobileMenu() {
+            mobileMenu.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+        }
+
+        function showSection(sectionId) {
+            allSections.forEach(section => section.classList.remove('active'));
+            const sectionToShow = document.getElementById(sectionId);
+            if (sectionToShow) sectionToShow.classList.add('active');
+
+            const productsContainer = document.getElementById('productsContainer');
+            const homeSection = document.getElementById('home');
             
-            // Gestionnaire d'événements pour la barre de recherche
-            const searchInput = document.getElementById('searchInput');
-            searchInput.addEventListener('input', function() {
-                clearTimeout(this.searchTimeout);
-                this.searchTimeout = setTimeout(() => {
-                    performSearch();
-                }, 300);
+            if (sectionId === 'home' || sectionId === 'products') {
+                 if (sectionId === 'home') homeSection.classList.add('active');
+                 productsContainer.classList.add('active');
+                 filtersSection.classList.add('active');
+                 productsGrid.classList.add('active');
+                 document.getElementById('newsletterSection').classList.add('active');
+                 resetSearch();
+            } else {
+                 productsContainer.classList.remove('active');
+                 homeSection.classList.remove('active');
+            }
+
+            document.querySelectorAll('.nav-link, .mobile-nav-link').forEach(link => {
+                link.classList.toggle('active', link.dataset.section === sectionId);
             });
             
-            // Gestionnaire pour la touche Entrée
-            searchInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    performSearch();
+            if (mobileNav.classList.contains('active')) toggleMobileMenu();
+            window.scrollTo(0, 0);
+        }
+
+        function renderProductsGrid(productsToRender = products) {
+            productsGrid.innerHTML = ''; 
+
+            productsToRender.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.classList.add('product-card');
+                productCard.dataset.id = product.id;
+                productCard.dataset.category = product.categorySlug;
+                productCard.dataset.isTopSeller = product.isTopSeller;
+                productCard.dataset.keywords = `${product.title.toLowerCase()} ${product.category.toLowerCase()} ${product.seller.toLowerCase()}`;
+
+                let badgeHtml = '';
+                if (product.badge) { 
+                    const badgeClass = product.badge === 'Nouveau' ? 'new-badge' : '';
+                    badgeHtml = `<div class="product-badge ${badgeClass}">${product.badge}</div>`;
+                } else if (product.discount) {
+                    badgeHtml = `<div class="product-badge discount-badge">-${product.discount}%</div>`; 
                 }
-            });
-        });
+                
+                const oldPriceHtml = product.oldPrice ? `<span class="old-price">${product.oldPrice.toLocaleString('fr-MG')} MGA</span>` : '';
+                
+                // NOUVEAU : Ajout des boutons modifier/supprimer
+                let ownerActionsHtml = '';
+                if (authState.isLoggedIn && authState.currentUser.id === product.creatorId) {
+                    ownerActionsHtml = `
+                        <div class="product-owner-actions">
+                            <button class="edit-btn" data-action="edit">Modifier</button>
+                            <button class="delete-btn" data-action="delete">Supprimer</button>
+                        </div>
+                    `;
+                }
 
-        // Fonction de recherche
+                productCard.innerHTML = `
+                    <div class="product-image ${product.categorySlug}">
+                        <img src="${product.image}" alt="${product.title}" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/333333?text=Image+non+disponible';">
+                        ${badgeHtml}
+                    </div>
+                    <div class="product-info">
+                        <div class="product-category">${product.category}</div>
+                        <h3 class="product-title">${product.title}</h3>
+                        <div class="product-rating">
+                            <div class="stars">${'★'.repeat(Math.min(5, Math.round(product.likes / 500)) || 1)}</div>
+                            <span class="rating-count">(${product.likes.toLocaleString('fr-MG')})</span>
+                        </div>
+                        <div class="product-price">
+                            ${product.price.toLocaleString('fr-MG')} MGA
+                            ${oldPriceHtml}
+                        </div>
+                        <div class="product-actions">
+                            <button class="download-btn" data-action="download">Télécharger</button>
+                            <button class="preview-btn" data-action="preview">Aperçu</button>
+                        </div>
+                        ${ownerActionsHtml} 
+                    </div>
+                `;
+                productsGrid.appendChild(productCard);
+            });
+        }
+        
+        // --- NOUVELLES FONCTIONS D'AUTHENTIFICATION ---
+
+        function updateAuthUI() {
+            if (authState.isLoggedIn) {
+                authLinks.style.display = 'none';
+                userProfile.style.display = 'flex';
+                usernameDisplay.textContent = authState.currentUser.name;
+            } else {
+                authLinks.style.display = 'flex';
+                userProfile.style.display = 'none';
+                usernameDisplay.textContent = '';
+            }
+            // Re-rendre la grille pour afficher/masquer les boutons d'édition
+            renderProductsGrid();
+        }
+
+        function showAuthModal(formToShow = 'login') {
+            if (formToShow === 'login') {
+                loginForm.style.display = 'block';
+                registerForm.style.display = 'none';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'block';
+            }
+            authModal.style.display = 'block';
+        }
+        
+        function closeAuthModal() {
+            authModal.style.display = 'none';
+        }
+        
+        function handleLogin(email, password) {
+            const user = users.find(u => u.email === email && u.password === password);
+            if (user) {
+                authState.isLoggedIn = true;
+                authState.currentUser = user;
+                alert(`Bienvenue ${user.name} !`);
+                closeAuthModal();
+                updateAuthUI();
+            } else {
+                alert('Email ou mot de passe incorrect.');
+            }
+        }
+        
+        function handleRegister(name, email, password) {
+            if (users.find(u => u.email === email)) {
+                alert('Cet email est déjà utilisé.');
+                return;
+            }
+            const newUser = { id: 'user' + (users.length + 1), name, email, password };
+            users.push(newUser);
+            authState.isLoggedIn = true;
+            authState.currentUser = newUser;
+            alert(`Inscription réussie ! Bienvenue ${name}.`);
+            closeAuthModal();
+            updateAuthUI();
+        }
+
+        function handleLogout() {
+            authState.isLoggedIn = false;
+            authState.currentUser = null;
+            alert('Vous avez été déconnecté.');
+            updateAuthUI();
+            showSection('home');
+        }
+        
+        function requireAuth(callback) {
+            if (authState.isLoggedIn) {
+                callback();
+            } else {
+                alert("Vous devez être connecté pour effectuer cette action.");
+                showAuthModal('login');
+            }
+        }
+
+
         function performSearch() {
-            const searchInput = document.getElementById('searchInput');
-            const query = searchInput.value.toLowerCase().trim();
-            
-            // Afficher le spinner
-            showLoading();
-            
-            // Simuler un délai de recherche
-            setTimeout(() => {
-                hideLoading();
-                searchTerm = query;
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const searchResultsDiv = document.getElementById('searchResults');
+            const searchResultsText = document.getElementById('searchResultsText');
+            const searchResultsCount = document.getElementById('searchResultsCount');
+            const noResultsDiv = document.getElementById('noResults');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+
+            loadingSpinner.style.display = 'block';
+            productsGrid.classList.remove('active');
+            searchResultsDiv.classList.remove('active');
+            noResultsDiv.classList.remove('active');
+
+            setTimeout(() => { 
+                loadingSpinner.style.display = 'none';
+                productsGrid.classList.add('active');
+
+                const filteredProducts = products.filter(p => {
+                    const keywords = `${p.title.toLowerCase()} ${p.category.toLowerCase()} ${p.seller.toLowerCase()}`;
+                    return keywords.includes(searchTerm);
+                });
+
+                renderProductsGrid(filteredProducts);
                 
-                if (query === '') {
+                if (searchTerm !== '') {
+                    if (filteredProducts.length > 0) {
+                        searchResultsDiv.classList.add('active');
+                        searchResultsText.innerText = `Résultats de recherche pour "${searchTerm}"`;
+                        searchResultsCount.innerText = `${filteredProducts.length} produit(s) trouvé(s).`;
+                        noResultsDiv.classList.remove('active');
+                    } else {
+                        noResultsDiv.classList.add('active');
+                        searchResultsDiv.classList.remove('active');
+                    }
+                } else {
                     resetSearch();
-                    return;
                 }
-                
-                filterAndDisplayProducts();
-                updateSearchResults(query);
             }, 500);
         }
 
-        // Fonction pour filtrer et afficher les produits
-        function filterAndDisplayProducts() {
-            let visibleCount = 0;
-            
-            allProducts.forEach(product => {
-                const category = product.dataset.category;
-                const keywords = product.dataset.keywords.toLowerCase();
-                const title = product.querySelector('.product-title').textContent.toLowerCase();
-                
-                // Vérifier si le produit correspond aux critères de recherche
-                const matchesSearch = searchTerm === '' || 
-                    keywords.includes(searchTerm) || 
-                    title.includes(searchTerm);
-                
-                // Vérifier si le produit correspond au filtre de catégorie
-                const matchesFilter = currentFilter === 'all' || 
-                    category === currentFilter ||
-                    (currentFilter === 'madagascar' && keywords.includes('madagascar')) ||
-                    (currentFilter === 'top-seller' && product.querySelector('.product-badge'));
-                
-                // Afficher ou masquer le produit
-                if (matchesSearch && matchesFilter) {
-                    product.classList.remove('hidden');
-                    visibleCount++;
-                } else {
-                    product.classList.add('hidden');
-                }
-            });
-            
-            // Afficher ou masquer le message "aucun résultat"
-            const noResults = document.getElementById('noResults');
-            if (visibleCount === 0) {
-                noResults.classList.add('active');
-            } else {
-                noResults.classList.remove('active');
-            }
-            
-            updateProductCount(visibleCount);
-        }
-
-        // Fonction pour mettre à jour les résultats de recherche
-        function updateSearchResults(query) {
-            const searchResults = document.getElementById('searchResults');
-            const searchResultsText = document.getElementById('searchResultsText');
-            const searchResultsCount = document.getElementById('searchResultsCount');
-            
-            const visibleProducts = allProducts.filter(p => !p.classList.contains('hidden'));
-            
-            if (query && visibleProducts.length > 0) {
-                searchResultsText.textContent = `Résultats pour "${query}"`;
-                searchResultsCount.textContent = `${visibleProducts.length} produit(s) trouvé(s)`;
-                searchResults.classList.add('active');
-            } else {
-                searchResults.classList.remove('active');
-            }
-        }
-
-        // Fonction pour filtrer les produits par catégorie
-        function filterProducts(category) {
-            currentFilter = category;
-            
-            // Mettre à jour les boutons de filtre
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            event.target.classList.add('active');
-            
-            // Filtrer et afficher les produits
-            filterAndDisplayProducts();
-        }
-
-        // Fonction pour réinitialiser la recherche
         function resetSearch() {
-            searchTerm = '';
-            currentFilter = 'all';
-            
-            // Réinitialiser l'input de recherche
-            document.getElementById('searchInput').value = '';
-            
-            // Réinitialiser les filtres
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector('.filter-btn[onclick="filterProducts(\'all\')"]').classList.add('active');
-            
-            // Afficher tous les produits
-            allProducts.forEach(product => {
-                product.classList.remove('hidden');
-            });
-            
-            // Masquer les messages
+            searchInput.value = '';
             document.getElementById('searchResults').classList.remove('active');
             document.getElementById('noResults').classList.remove('active');
+            filterProducts('all');
+        }
+
+        function filterProducts(filter) {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => btn.classList.remove('active'));
+            document.querySelector(`.filter-btn[data-filter="${filter}"]`).classList.add('active');
             
-            // Mettre à jour le titre
-            document.getElementById('heroTitle').textContent = 'Les produits numériques les plus vendus';
-            updateProductCount();
+            let filteredProducts;
+            if (filter === 'all') {
+                filteredProducts = products;
+            } else if (filter === 'top-seller') {
+                filteredProducts = products.filter(p => p.isTopSeller);
+            } else {
+                filteredProducts = products.filter(p => p.categorySlug === filter);
+            }
+            renderProductsGrid(filteredProducts);
+
+            document.getElementById('searchResults').classList.remove('active');
+            document.getElementById('noResults').classList.remove('active');
+            searchInput.value = '';
         }
 
-        // Fonction pour mettre à jour le compteur de produits
-        function updateProductCount(count = null) {
-            const subtitle = document.getElementById('heroSubtitle');
-            const visibleCount = count !== null ? count : allProducts.filter(p => !p.classList.contains('hidden')).length;
-            subtitle.textContent = `${visibleCount}+ résultats pertinents`;
+        function showProductDetail(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            currentProductId = productId;
+
+            document.getElementById('detailProductTitle').innerText = product.title;
+            document.getElementById('detailProductCategory').innerText = product.category;
+            document.getElementById('detailProductSeller').innerText = product.seller;
+            document.getElementById('detailProductPrice').innerText = `${product.price.toLocaleString('fr-MG')} MGA`;
+            document.getElementById('detailProductDescription').innerText = product.description;
+            document.getElementById('likeCount').innerText = product.likes.toLocaleString();
+
+            const detailImageContainer = document.getElementById('detailProductImage');
+            detailImageContainer.innerHTML = `<img src="${product.image}" alt="${product.title}">`;
+
+            renderCommentsForProduct(product);
+            showSection('productDetail');
         }
 
-        // Fonctions d'affichage du loader
-        function showLoading() {
-            document.getElementById('loadingSpinner').style.display = 'block';
-            document.getElementById('productsGrid').style.opacity = '0.5';
+        function renderCommentsForProduct(product) {
+            const commentsList = document.getElementById('commentsList');
+            commentsList.innerHTML = '';
+            if (product.comments && product.comments.length > 0) {
+                product.comments.forEach(comment => {
+                    const commentItem = document.createElement('div');
+                    commentItem.classList.add('comment-item');
+                    commentItem.innerHTML = `<p class="comment-author">${comment.author}</p><p class="comment-text">${comment.text}</p>`;
+                    commentsList.appendChild(commentItem);
+                });
+                document.getElementById('commentCount').innerText = product.comments.length;
+            } else {
+                commentsList.innerHTML = '<p style="text-align: center; color: #666;">Aucun commentaire pour le moment.</p>';
+                document.getElementById('commentCount').innerText = '0';
+            }
         }
+        
+        // --- NOUVELLES FONCTIONS POUR MODIFIER ET SUPPRIMER ---
+        function handleEditProduct(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
 
-        function hideLoading() {
-            document.getElementById('loadingSpinner').style.display = 'none';
-            document.getElementById('productsGrid').style.opacity = '1';
+            // Pré-remplir le formulaire
+            document.getElementById('editingProductId').value = product.id;
+            document.getElementById('productTitle').value = product.title;
+            document.getElementById('productCategory').value = product.categorySlug;
+            document.getElementById('productDescription').value = product.description;
+            document.getElementById('productPrice').value = product.price;
+
+            // Changer le titre et le bouton du formulaire
+            document.querySelector('#sellProductForm .form-title').textContent = "Modifier le produit";
+            document.querySelector('#sellProductForm .form-submit-btn').textContent = "Mettre à jour";
+
+            showSection('sellProductForm');
         }
-
-        // Fonction de téléchargement des produits
-        function downloadProduct(filename, type, price = 0) {
-            if (type === 'premium' && price > 0) {
-                if (confirm(`Voulez-vous acheter ce produit pour ${price.toLocaleString()} MGA ?`)) {
-                    alert(`Redirection vers la page de paiement pour ${filename}...`);
-                    // Ici vous pourriez intégrer un système de paiement
+        
+        function handleDeleteProduct(productId) {
+             if (confirm("Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.")) {
+                const productIndex = products.findIndex(p => p.id === productId);
+                if (productIndex > -1) {
+                    products.splice(productIndex, 1);
+                    alert("Produit supprimé avec succès.");
+                    showSection('home');
                 }
-            } else if (type === 'login-required') {
-                alert('Connexion requise. Redirection vers la page de connexion...');
-                // Redirection vers la page de connexion
-            } else if (type === 'booking') {
-                alert('Redirection vers la page de réservation...');
-                // Redirection vers système de réservation
-            } else {
-                alert(`Téléchargement de ${filename} en cours...`);
-                // Simuler le téléchargement
-                setTimeout(() => {
-                    alert('Téléchargement terminé !');
-                }, 1000);
             }
         }
 
-        // Fonction d'aperçu des produits
-        function previewProduct(previewId) {
-            alert(`Aperçu du produit ${previewId} - Fonctionnalité à implémenter`);
-            // Ici vous pourriez ouvrir une modal avec l'aperçu
-        }
 
-        // Fonction de gestion du menu mobile
-        function toggleMobileMenu() {
-            const mobileMenu = document.querySelector('.mobile-menu');
-            const mobileNav = document.querySelector('.mobile-nav');
-            
-            mobileMenu.classList.toggle('active');
-            mobileNav.classList.toggle('active');
-            
-            // Empêcher le scroll du body quand le menu est ouvert
-            if (mobileNav.classList.contains('active')) {
-                document.body.style.overflow = 'hidden';
-            } else {
-                document.body.style.overflow = '';
-            }
-        }
+        // --- EVENT LISTENERS ---
 
-        // Fermer le menu mobile
-        document.querySelector('.mobile-nav-close').addEventListener('click', function() {
-            document.querySelector('.mobile-nav').classList.remove('active');
-            document.querySelector('.mobile-menu').classList.remove('active');
-            document.body.style.overflow = '';
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProductsGrid();
+            showSection('home');
+            updateAuthUI(); // Mettre à jour l'UI d'authentification au chargement
         });
-
-        // Gestion des liens de navigation mobile
-        document.querySelectorAll('.mobile-nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
+        
+        document.querySelectorAll('.nav-link, .mobile-nav-link, .footer-section a[data-section]').forEach(link => {
+            link.addEventListener('click', (e) => {
                 e.preventDefault();
-                const section = this.dataset.section;
-                
-                // Fermer le menu mobile
-                document.querySelector('.mobile-nav').classList.remove('active');
-                document.querySelector('.mobile-menu').classList.remove('active');
-                document.body.style.overflow = '';
-                
-                // Naviguer vers la section
-                navigateToSection(section);
+                const sectionId = link.dataset.section;
+                if(sectionId) showSection(sectionId);
             });
         });
 
-        // Fonction de navigation
-        function navigateToSection(section) {
-            // Mettre à jour les liens de navigation actifs
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-                if (link.dataset.section === section) {
-                    link.classList.add('active');
-                }
-            });
-            
-            // Logique de navigation (à adapter selon vos besoins)
-            switch(section) {
-                case 'home':
-                    resetSearch();
-                    break;
-                case 'products':
-                    filterProducts('all');
-                    break;
-                case 'formations':
-                    filterProducts('formation');
-                    break;
-                case 'services':
-                    alert('Page Services - À implémenter');
-                    break;
-                case 'blog':
-                    alert('Page Blog - À implémenter');
-                    break;
-                case 'contact':
-                    alert('Page Contact - À implémenter');
-                    break;
-                default:
-                    console.log('Section non reconnue:', section);
-            }
-        }
+        mobileMenu.addEventListener('click', toggleMobileMenu);
+        document.querySelector('.mobile-nav-close').addEventListener('click', toggleMobileMenu);
+        
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') performSearch();
+        });
+        clearSearchBtn.addEventListener('click', resetSearch);
 
-        // Fonction d'inscription à la newsletter
-        function subscribeNewsletter(event) {
+        filtersSection.addEventListener('click', (e) => {
+            if (e.target.classList.contains('filter-btn')) {
+                filterProducts(e.target.dataset.filter);
+            }
+        });
+        
+        productsGrid.addEventListener('click', (e) => {
+            const card = e.target.closest('.product-card');
+            if (!card) return;
+
+            const action = e.target.dataset.action;
+            const productId = card.dataset.id;
+            
+            if (action === 'download') {
+                requireAuth(() => showSection('downloadForm'));
+            } else if (action === 'preview') {
+                showProductDetail(productId);
+            } else if (action === 'edit') {
+                 handleEditProduct(productId);
+            } else if (action === 'delete') {
+                 handleDeleteProduct(productId);
+            } else { 
+                showProductDetail(productId);
+            }
+        });
+
+        document.getElementById('productPublishForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            const email = document.getElementById('newsletterEmail').value;
             
-            if (email) {
-                alert(`Merci ! Vous êtes maintenant abonné avec l'email : ${email}`);
-                document.getElementById('newsletterEmail').value = '';
-                // Ici vous pourriez envoyer l'email à votre service de newsletter
-            }
-        }
-
-        // Fonction d'ouverture des réseaux sociaux
-        function openSocial(platform) {
-            const links = {
-                email: 'mailto:contact@smartdigitalpro.mg',
-                website: 'https://smartdigitalpro.mg',
-                linkedin: 'https://linkedin.com/company/smartdigitalpro',
-                telegram: 'https://t.me/smartdigitalpro'
-            };
+            const editingId = document.getElementById('editingProductId').value;
             
-            if (links[platform]) {
-                if (platform === 'email') {
-                    window.location.href = links[platform];
-                } else {
-                    window.open(links[platform], '_blank');
+            if (editingId) { // Mode mise à jour
+                const productIndex = products.findIndex(p => p.id === editingId);
+                if (productIndex > -1) {
+                    products[productIndex].title = this.querySelector('#productTitle').value;
+                    products[productIndex].category = this.querySelector('#productCategory').options[this.querySelector('#productCategory').selectedIndex].text;
+                    products[productIndex].categorySlug = this.querySelector('#productCategory').value;
+                    products[productIndex].description = this.querySelector('#productDescription').value;
+                    products[productIndex].price = parseFloat(this.querySelector('#productPrice').value);
+                    
+                    const imageFile = this.querySelector('#productFile').files[0];
+                    if (imageFile) {
+                        products[productIndex].image = URL.createObjectURL(imageFile);
+                    }
+                    alert('Produit mis à jour !');
                 }
-            }
-        }
+            } else { // Mode création
+                const newProduct = {
+                    id: 'product' + (products.length + 1),
+                    creatorId: authState.currentUser.id,
+                    title: this.querySelector('#productTitle').value,
+                    category: this.querySelector('#productCategory').options[this.querySelector('#productCategory').selectedIndex].text,
+                    categorySlug: this.querySelector('#productCategory').value,
+                    description: this.querySelector('#productDescription').value,
+                    image: 'https://placehold.co/600x400/cccccc/333333?text=Nouveau+Produit',
+                    price: parseFloat(this.querySelector('#productPrice').value),
+                    seller: authState.currentUser.name,
+                    likes: 0,
+                    comments: [],
+                    badge: 'Nouveau',
+                    isTopSeller: false
+                };
+                
+                const imageFile = this.querySelector('#productFile').files[0];
+                if (imageFile) {
+                    newProduct.image = URL.createObjectURL(imageFile);
+                }
 
-        // Gestion des liens de navigation desktop
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const section = this.dataset.section;
-                navigateToSection(section);
+                products.unshift(newProduct);
+                alert('Votre produit a été soumis !');
+            }
+            
+            this.reset();
+            document.getElementById('editingProductId').value = '';
+            document.querySelector('#sellProductForm .form-title').textContent = "Proposer un nouveau produit ou service";
+            document.querySelector('#sellProductForm .form-submit-btn').textContent = "Soumettre le produit";
+
+            showSection('home');
+        });
+        
+        document.getElementById('downloadInfoForm').addEventListener('submit', function(e){
+            e.preventDefault();
+            alert('Merci ! Votre téléchargement va commencer.');
+            this.reset();
+            showSection('home');
+        });
+
+        document.querySelector('.newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Merci pour votre abonnement !');
+            this.reset();
+        });
+        
+        // Page de détails (avec contrôle d'accès)
+        document.getElementById('detailLikeBtn').addEventListener('click', () => {
+            requireAuth(() => {
+                const product = products.find(p => p.id === currentProductId);
+                if (product) {
+                    product.likes++;
+                    document.getElementById('likeCount').innerText = product.likes.toLocaleString();
+                    renderProductsGrid(); // Mettre à jour la carte dans la grille
+                }
             });
         });
+        
+        document.getElementById('submitCommentBtn').addEventListener('click', () => {
+            requireAuth(() => {
+                const newCommentTextarea = document.getElementById('newCommentText');
+                const newCommentContent = newCommentTextarea.value.trim();
+                if (newCommentContent === '' || !currentProductId) return;
 
-        // Animation au scroll
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 100) {
-                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
-            } else {
-                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                const product = products.find(p => p.id === currentProductId);
+                if (product) {
+                    const newComment = { author: authState.currentUser.name, text: newCommentContent }; 
+                    product.comments.push(newComment);
+                    renderCommentsForProduct(product);
+                    newCommentTextarea.value = '';
+                }
+            });
+        });
+        
+        document.getElementById('detailDownloadBtn').addEventListener('click', () => requireAuth(() => showSection('downloadForm')));
+        
+        // --- EVENT LISTENERS POUR AUTHENTIFICATION ---
+        document.querySelector('.header-actions').addEventListener('click', (e) => {
+            const action = e.target.dataset.action;
+            if (action === 'login') {
+                e.preventDefault();
+                showAuthModal('login');
+            } else if (action === 'register') {
+                e.preventDefault();
+                showAuthModal('register');
+            } else if (action === 'logout') {
+                e.preventDefault();
+                handleLogout();
+            } else if (action === 'sell') {
+                e.preventDefault();
+                requireAuth(() => showSection('sellProductForm'));
+            }
+        });
+        
+        document.querySelector('.mobile-nav-container').addEventListener('click', (e) => {
+            if (e.target.dataset.action === 'sell') {
+                e.preventDefault();
+                requireAuth(() => showSection('sellProductForm'));
+            }
+        });
+        
+        authModal.addEventListener('click', (e) => {
+            if (e.target.classList.contains('auth-modal') || e.target.classList.contains('close-btn')) {
+                closeAuthModal();
+            }
+            const action = e.target.dataset.action;
+            if (action === 'show-register') {
+                e.preventDefault();
+                showAuthModal('register');
+            } else if (action === 'show-login') {
+                e.preventDefault();
+                showAuthModal('login');
             }
         });
 
-        // Fermer le menu mobile en cliquant en dehors
-        document.addEventListener('click', function(e) {
-            const mobileNav = document.querySelector('.mobile-nav');
-            const mobileMenu = document.querySelector('.mobile-menu');
-            
-            if (mobileNav.classList.contains('active') && 
-                !mobileNav.contains(e.target) && 
-                !mobileMenu.contains(e.target)) {
-                mobileNav.classList.remove('active');
-                mobileMenu.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            handleLogin(email, password);
         });
+
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            handleRegister(name, email, password);
+        });
+
     </script>
 </body>
 </html>
